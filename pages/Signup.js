@@ -1,7 +1,12 @@
 import React from 'react';
 import { StyleSheet, Text, TextInput, View, Button } from 'react-native';
 
+import NewButton from '../components/button';
+
 export default class Signup extends React.Component {
+    static navigationOptions = {
+        title: 'Cadastro'
+    }
     render() {
         return (
             <View>
@@ -12,10 +17,7 @@ export default class Signup extends React.Component {
                     <TextInput placeholder="E-mail" style={styles.input}></TextInput>
                     <TextInput placeholder="Senha" style={styles.input}></TextInput>
                     <TextInput placeholder="Telefone" style={styles.input}></TextInput>
-                    <Button 
-                        title="Realizar Cadastro"
-                        color="#7bbb5e"
-                    />
+                    <NewButton text="Realizar Cadastro"/>
                 </View>
             </View>
         );
@@ -25,21 +27,30 @@ export default class Signup extends React.Component {
 const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
+        justifyContent: 'center',
     },
     input: {
         borderBottomColor: '#7bbb5e',
         borderBottomWidth: 1.5,
-        width: 300,
-        marginBottom: 20
+        width: 380,
+        marginBottom: 20,
+        height: 80,
+        paddingBottom: 0
     },
     title: {
-        fontSize: 32,
+        fontSize: 40,
         marginTop: 10,
-        marginLeft: 33,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        paddingLeft: 30,
+        paddingRight: 30,
+        marginBottom: 25
     },
     description: {
-        marginLeft: 33,
-        color: '#c4c4c4'
+        color: '#c4c4c4',
+        fontSize: 18,
+        justifyContent: 'center',
+        textAlign: 'justify',
+        paddingLeft: 30,
+        paddingRight: 30
     }
 });
