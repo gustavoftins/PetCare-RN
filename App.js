@@ -1,14 +1,23 @@
 
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+
+import React, {Fragment} from 'react';
+import Signup from './src/pages/Signup/index';
+import Opening from './src/pages/Opening/index';
+import Signin from './src/pages/Signin/index';
+import Home from './src/pages/Home/index';
+
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 
-import Signup from './pages/Signup';
-import Opening from './pages/Opening';
-
 const AppStackNavigator = createStackNavigator({
-    Home: Opening,
-    Signup: Signup
+    InitialPage: Opening,
+    Signup: Signup,
+    Signin: Signin,
+    Home: { 
+      screen: Home,
+      navigationOptions: {
+        header: null
+      }
+    }
 });
 
 class App extends React.Component {
@@ -21,4 +30,5 @@ class App extends React.Component {
 
 
 export default createAppContainer(AppStackNavigator);
+
 
