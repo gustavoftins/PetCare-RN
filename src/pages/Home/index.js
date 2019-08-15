@@ -45,7 +45,7 @@ export default createBottomTabNavigator({
          navigationOptions: {
              tabBarLabel: "Configurações",
              tabBarIcon:({ tintcolor }) =>(
-                 <Icon name="settings" color={tintcolor} size={24} />
+                 <Icon name="cog" color={tintcolor} size={24} />
              )
          }
          }
