@@ -38,7 +38,8 @@ const styles = StyleSheet.create({
     },
     title: {
         fontWeight: 'bold',
-        marginBottom: 15
+        marginBottom: 15,
+        color: '#f58c22'
     },
     btn: {
         backgroundColor: '#7bbb5e',
