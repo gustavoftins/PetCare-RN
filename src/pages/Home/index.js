@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, StatusBar } from 'react-native';
 
 import { createBottomTabNavigator } from 'react-navigation';
 
@@ -9,8 +9,7 @@ import Settings from '../Settings/index';
 // import Icon from 'react-native-vector-icons/FontAwesome';
 import HomeHeader from '../../components/HomeHeader/index';
 import Section from '../../components/Section/index';
-import { TouchableHighlight, TouchableOpacity } from 'react-native-gesture-handler';
-
+import NewButton from '../../components/button';
 export class Home extends React.Component {
     static navigationOptions = {
         header: null
@@ -18,18 +17,16 @@ export class Home extends React.Component {
     render() {
         return (
             <ScrollView style={{flexDirection: 'column', flex: 1}}>
+                <StatusBar backgroundColor="white" barStyle="default" />
                 <HomeHeader />
-                <View>
+                <View style={{alignItems: 'center', width: '100%', flex: 1}} >
                     <Text style={styles.sectionText}>Serviços melhores avaliados</Text>
-                    <TouchableOpacity onPress={()=>this.props.navigation.navigate("Signin")} >
+                    <TouchableOpacity onPress={()=>this.props.navigation.navigate('Signin')} >
                         <Image source={require('../../assets/most-rated.jpg')} style={styles.img} />
                     </TouchableOpacity>
-                    <Text style={styles.subtitle}> Petshops</Text>
-                    <Section imgpath={paths.petshop} />
-                    <Text style={styles.subtitle}>Clínicas Veterinárias</Text>
-                    <Section imgpath={paths.clinica} />
-                    <Text styles={styles.subtitle}>Creches</Text>
-                    <Section imgpath={paths.creches} />
+                    <Section title="Creches" />
+                    <Section title="Petshops" />
+                    <Section title="Clinicas"/>
                 </View>
             </ScrollView>
         );
@@ -42,7 +39,7 @@ export default createBottomTabNavigator({
         navigationOptions: {
             tabBarLabel: null,
             tabBarIcon:() =>(
-               <Image source={require('../../assets/home.png')} style={{height: 24, width: 24}} />
+               <Image source={require('../../assets/home.png')} style={{height: 28, width: 28}} />
             ),
             tabBarOptions: {
                 activeTintColor: '#7bbb5e'
@@ -54,7 +51,7 @@ export default createBottomTabNavigator({
         navigationOptions: {
             tabBarLabel: null,
             tabBarIcon:({ tintcolor }) =>(
-                <Image source={require('../../assets/Cart-512.png')} style={{height: 24, width: 24}} />
+                <Image source={require('../../assets/Cart-512.png')} style={{height: 28, width: 28}} />
             ),
             tabBarOptions: {
                 activeTintColor: '#7bbb5e'
@@ -68,7 +65,9 @@ export default createBottomTabNavigator({
              tabBarIcon:({ tintcolor }) =>(
                 <Image source={require('../../assets/settings_icon.png')} style={{height: 24, width: 24}} />
              ),
-             tabBarOptions: '#7bbb5e'
+             tabBarOptions: {
+                 activeTintColor:'#7bbb5e'
+             }
         }
     }
 });

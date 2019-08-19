@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 
 export default class Section extends React.Component {
     constructor(props){
@@ -7,14 +7,11 @@ export default class Section extends React.Component {
     }
     render() {
         return(
-            <View style={styles.section}>
-                <View style={{flexDirection: 'row', height: '100%', width: '100%'}}>
-                    <Image source={this.props.imgpath} style={styles.img} />
+            <View style={[styles.section]}>
+                <TouchableOpacity>
                     <Text style={styles.title}>{this.props.title}</Text>
-                </View>
-                <View>
-                    <Text>{this.props.description}</Text>
-                </View>
+                    <Image source={this.props.imgpath} style={styles.img} />
+                </TouchableOpacity>
             </View>
         );
     }
@@ -23,14 +20,19 @@ export default class Section extends React.Component {
 const styles = StyleSheet.create({
     section: {
         height: 100,
-        width: '100%',
-        borderColor: '#e0e0e0',
-        borderWidth: 1.8,
-        marginBottom: 30
+        width: '95%',
+        borderColor: '#ebeced',
+        borderWidth: 1,
+        borderRadius: 5,
+        marginBottom: 5,
+        alignItems: 'center',
+        alignContent: 'center',
+        paddingTop: 10
     },
     title: {
-        fontSize: 20,
-        fontWeight: 'bold'
+        fontSize: 38,
+        fontWeight: 'bold',
+        color: '#394458'
     },
     img: {
         height: '100%',
