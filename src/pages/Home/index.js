@@ -17,7 +17,7 @@ export class Home extends React.Component {
     render() {
         return (
             <ScrollView style={{flexDirection: 'column', flex: 1}}>
-                <StatusBar backgroundColor="white" barStyle="default" />
+                <StatusBar backgroundColor="white" barStyle="dark-content" />
                 <HomeHeader />
                 <View style={{alignItems: 'center', width: '100%', flex: 1}} >
                     <Text style={styles.sectionText}>Serviços melhores avaliados</Text>
