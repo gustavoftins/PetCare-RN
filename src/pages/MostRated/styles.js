@@ -1,7 +1,11 @@
 import { StyleSheet } from 'react-native';
 
-const styles = StyleSheet.create({
-
+export default StyleSheet.create({
+    container: {
+        height: '10%',
+        width: '90%',
+        borderColor: '#ebeced',
+        borderWidth: 1.5
+    }
 });
 
-export default styles;

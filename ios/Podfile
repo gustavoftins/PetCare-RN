@@ -29,6 +29,8 @@ target 'petcare' do
 
   pod 'ReactNativeNavigation', :path => '../node_modules/react-native-navigation'
 
+  pod 'RNFS', :path => '../node_modules/react-native-fs'
+
   target 'petcareTests' do
     inherit! :search_paths
     # Pods for testing

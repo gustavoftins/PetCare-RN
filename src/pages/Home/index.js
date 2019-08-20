@@ -21,7 +21,7 @@ export class Home extends React.Component {
                 <HomeHeader />
                 <View style={{alignItems: 'center', width: '100%', flex: 1}} >
                     <Text style={styles.sectionText}>Serviços melhores avaliados</Text>
-                    <TouchableOpacity onPress={()=>this.props.navigation.navigate('Signin')} >
+                    <TouchableOpacity onPress={()=>this.props.navigation.navigate("MostRated")} >
                         <Image source={require('../../assets/most-rated.jpg')} style={styles.img} />
                     </TouchableOpacity>
                     <Section title="Creches" />
