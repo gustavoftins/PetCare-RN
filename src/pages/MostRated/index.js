@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet,ScrollView } from 'react-native';
+import { View, StyleSheet,ScrollView, TouchableOpacity } from 'react-native';
 import styles from './styles';
 import CompanyCard from '../../components/Cards/Company/index';
 // import { Container } from './styles';
@@ -16,14 +16,17 @@ export default class MostRated extends React.Component {
         <CompanyCard imgpath={paths.blumengarten}
           title="BlumenGarten PetShop"
           description="dsjifjdsifsjdfidsjfisjfisfjsdifjdsifsdifj"
+          status="Aberto"
         />
-        <CompanyCard imgpath={paths.central} title="Central PetShop" description="difjdsifjsdifjdsif" />
-        <CompanyCard imgpath={paths.central} title="Central PetShop" description="difjdsifjsdifjdsif" />
-        <CompanyCard imgpath={paths.central} title="Central PetShop" description="difjdsifjsdifjdsif" />
-        <CompanyCard imgpath={paths.central} title="Central PetShop" description="difjdsifjsdifjdsif" />
-        <CompanyCard imgpath={paths.central} title="Central PetShop" description="difjdsifjsdifjdsif" />
-        <CompanyCard imgpath={paths.central} title="Central PetShop" description="difjdsifjsdifjdsif" />
-        <CompanyCard imgpath={paths.central} title="Central PetShop" description="difjdsifjsdifjdsif" />
+        <TouchableOpacity onPress={()=>this.props.navigation.navigate('Company')} >
+          <CompanyCard imgpath={paths.central} title="Central PetShop" description="difjdsifjsdifjdsif" />
+        </TouchableOpacity>
+        <CompanyCard imgpath={paths.central} title="Central PetShop" description="difjdsifjsdifjdsif" status="Aberto" />
+        <CompanyCard imgpath={paths.central} title="Central PetShop" description="difjdsifjsdifjdsif" status="Aberto" />
+        <CompanyCard imgpath={paths.central} title="Central PetShop" description="difjdsifjsdifjdsif" status="Aberto" />
+        <CompanyCard imgpath={paths.central} title="Central PetShop" description="difjdsifjsdifjdsif" status="Aberto" />
+        <CompanyCard imgpath={paths.central} title="Central PetShop" description="difjdsifjsdifjdsif" status="Aberto" />
+        <CompanyCard imgpath={paths.central} title="Central PetShop" description="difjdsifjsdifjdsif"  status="Aberto" />
         <CompanyCard imgpath={paths.central} title="Central PetShop" description="difjdsifjsdifjdsif" />
         <CompanyCard imgpath={paths.central} title="Central PetShop" description="difjdsifjsdifjdsif" />
         <CompanyCard imgpath={paths.central} title="Central PetShop" description="difjdsifjsdifjdsif" />

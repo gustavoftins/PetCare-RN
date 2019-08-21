@@ -15,8 +15,9 @@ export default class Company extends React.Component {
             <Image source={this.props.imgpath} style={styles.img}/>
           </View>
           <View style={styles.textContainer}>
-            <Text style={styles.title}>{this.props.title}</Text>
-            <Text style={styles.description}>{this.props.description}</Text>
+            <Text numberOfLines={1} style={styles.title}>{this.props.title}</Text>
+            <Text numberOfLines={1} style={styles.description}>{this.props.description}</Text>
+            <Text style={styles.status}>{this.props.status}</Text>
           </View>
         </View>
       </View>

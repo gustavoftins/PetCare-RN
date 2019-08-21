@@ -5,6 +5,7 @@ import Opening from './src/pages/Opening/index';
 import Signin from './src/pages/Signin/index';
 import Home from './src/pages/Home/index';
 import MostRated from './src/pages/MostRated/index';
+import Company from './src/pages/Company/index';
 
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 
@@ -18,7 +19,8 @@ const AppStackNavigator = createStackNavigator({
         header: null
       }
     },
-    MostRated: MostRated
+    MostRated: MostRated,
+    Company: Company
 });
 
 class App extends React.Component {

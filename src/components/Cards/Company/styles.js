@@ -5,16 +5,16 @@ export default StyleSheet.create({
    container: {
        flexDirection: 'row',
        width: '100%',
-       height: 100,
+       height: 120,
        justifyContent: 'center',
-       marginTop: 30
+       marginTop: 5,
    },
    card: {
        width: '90%',
        height: '100%',
        borderColor: '#ebeced',
        borderWidth: 1.5,
-       marginTop: 10,
+       marginTop: 7,
        flexDirection: 'row',
    },
    imgContainer: {
@@ -36,7 +36,12 @@ export default StyleSheet.create({
        fontWeight: 'bold',
    },
    description: {
-       fontSize: 16
+       fontSize: 16,
+       color: '#e6e6e6'
+   },
+   status: {
+       fontSize: 11,
+       color: '#7bbb5e'
    }
 
 });
