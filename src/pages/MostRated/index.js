@@ -18,10 +18,10 @@ export default class MostRated extends React.Component {
           description="dsjifjdsifsjdfidsjfisjfisfjsdifjdsifsdifj"
           status="Aberto"
         />
-        <TouchableOpacity onPress={()=>this.props.navigation.navigate('Company')} >
-          <CompanyCard imgpath={paths.central} title="Central PetShop" description="difjdsifjsdifjdsif" />
-        </TouchableOpacity>
-        <CompanyCard imgpath={paths.central} title="Central PetShop" description="difjdsifjsdifjdsif" status="Aberto" />
+
+        <CompanyCard onPress={()=>this.props.navigation.navigate('Company')}
+        imgpath={paths.central} title="Central PetShop" description="difjdsifjsdifjdsif" />
+        <CompanyCard onPress={()=>this.props.navigation.navigate("Home")} imgpath={paths.central} title="Central PetShop" description="difjdsifjsdifjdsif" status="Aberto" />
         <CompanyCard imgpath={paths.central} title="Central PetShop" description="difjdsifjsdifjdsif" status="Aberto" />
         <CompanyCard imgpath={paths.central} title="Central PetShop" description="difjdsifjsdifjdsif" status="Aberto" />
         <CompanyCard imgpath={paths.central} title="Central PetShop" description="difjdsifjsdifjdsif" status="Aberto" />

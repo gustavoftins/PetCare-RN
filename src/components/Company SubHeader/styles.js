@@ -8,6 +8,8 @@ export default StyleSheet.create({
         borderBottomColor: '#e6e6e6',
         borderBottomWidth: 1,
         alignItems: 'center',
+        backgroundColor: 'white',
+        marginBottom: 10
     },
     icon: {
         width: 70,
