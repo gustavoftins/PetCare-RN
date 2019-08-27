@@ -12,11 +12,26 @@ export default function Cart() {
       <TouchableOpacity style={styles.btn}>
         <Text style={styles.cleanCart}>Limpar Carrinho</Text>
       </TouchableOpacity>
-        <CartProduct />
-        <CartProduct />
-        <CartProduct />
-        <CartProduct />
-        <CartProduct />
+        <CartProduct productName="Ração Malaca"
+          quantity="2"
+          price="196"
+        />
+        <CartProduct productName="Coleira azul"
+          quantity="1"
+          price="68"
+        />
+        <CartProduct productName="Petisco para gatos"
+          quantity="4"
+          price="16"
+        />
+        <CartProduct productName="Remédio" 
+          quantity="1"
+          price="35"
+        />
+        <CartProduct productName="Motor de barco" 
+          quantity="28"
+          price="22"
+        />
     </ScrollView>
   );
 }

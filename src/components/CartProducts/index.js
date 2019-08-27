@@ -4,13 +4,13 @@ import styles from './styles';
 
 // import { Container } from './styles';
 
-export default function CartProducts() {
+export default function CartProducts({ productName, quantity, price}) {
   return (
     <View style={styles.container}>
         <View style={styles.textContainer}>
-            <Text style={styles.name}>Ração Malaca</Text>
-            <Text style={styles.text}>Quantidade: 25</Text>
-            <Text style={styles.text}>Total: R$78.00</Text>
+            <Text style={styles.name}>{productName}</Text>
+            <Text style={styles.text}>Quantidade: {quantity}</Text>
+            <Text style={styles.text}>Total: R${price}</Text>
         </View>
         <View style={styles.iconsContainer}>
             <View>
