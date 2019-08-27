@@ -15,7 +15,7 @@ export default function CartProducts() {
         <View style={styles.iconsContainer}>
             <View>
                 <TouchableOpacity>
-                    <Image style={styles.icon} source={require('../../assets/minus.png')}/>
+                    <Image style={[styles.icon, styles.firstIcon]} source={require('../../assets/minus.png')}/>
                 </TouchableOpacity>
             </View>
             <View>

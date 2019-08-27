@@ -9,24 +9,31 @@ export default StyleSheet.create({
         borderTopColor: '#dedede',
         borderTopWidth: 0.5,
         height: 80,
-        paddingLeft: 5
+        paddingLeft: 5,
     },
     img: {
-        height: 60,
-        width: 60
+        height: 35,
+        width: 35
     },
     title: {
         fontSize: 20,
         fontWeight: 'bold'
     },
     textContainer: {
-        maxWidth: '65%'
+        maxWidth: '65%',
+        alignContent: 'center',
+        justifyContent: 'center'
     },
     iconContainer: {
         width: '30%',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     text: {
         color: '#c4c4c4'
+    },
+    btn: {
+        width: '100%',
+        height: '100%'
     }
 });

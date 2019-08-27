@@ -3,19 +3,23 @@ import { StyleSheet } from 'react-native';
 export default StyleSheet.create({
     container: {
         flexDirection: 'row',
-        width: '100%',
-        marginLeft: 15
+        maxWidth: '100%',
+        marginLeft: 15,
+        borderBottomColor: '#dedede',
+        borderBottomWidth: 0.5,
+        borderTopColor: '#dedede',
+        borderTopWidth: 0.5,
     },
     icon: {
-        height: 30,
-        width: 30,
+        height: 40,
+        width: 40,
     },
     iconsContainer: {
         flexDirection: 'row',
         alignItems: 'center'
     },
     textContainer: {
-        width: '80%'
+        width: '70%'
     },
     name: {
         color: '#ec910a',
@@ -25,5 +29,8 @@ export default StyleSheet.create({
     text: {
         fontWeight: 'bold',
         fontSize: 16
+    },
+    firstIcon: {
+        marginRight: 15
     }
 });

@@ -1,14 +1,14 @@
 import React from 'react';
 
 import { View, TextInput, Image, StyleSheet, Text } from 'react-native';
-
+import Title from '../../components/Title/index';
 // import { Container } from './styles';
 
 export default class HomeHeader extends React.Component {
     render() {
         return(
             <View style={styles.container}>
-                <Text style={styles.title}>Explore</Text>
+                <Title title="Explore"/>
                 <View style={styles.background}>
                     <TextInput placeholder="Pesquisar" style={styles.input}></TextInput>
                 </View>
@@ -32,7 +32,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#e0e0e0',
         borderRadius: 15,
         height: 40,
-        marginBottom: 15
+        marginBottom: 15,
+        padding: 10
     },
     title: {
         fontSize: 28,
