@@ -10,6 +10,7 @@ import styles from './styles';
 import HomeHeader from '../../components/HomeHeader/index';
 import Section from '../../components/Section/index';
 import NewButton from '../../components/Button/button';
+import SearchBar from '../../components/SearchBar/index';
 
 export function navigationOptions({ navigation }) {
     return {
@@ -21,6 +22,8 @@ export function Home({ navigation }) {
     return (
         <ScrollView style={{height: '100%'}}>
             <HomeHeader />
+            <StatusBar backgroundColor="#7bbb5e"/>
+            <SearchBar />
             <View style={{alignItems: 'center', marginTop: 15}}>
                 <Section title="Melhores Avaliados" imgpath={paths.star}/>
                 <Section title="Pet Shops" imgpath={paths.petshop}/>
