@@ -1,34 +1,27 @@
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
+    img: {
+        height: 180,
+        width: 180
+    },
     container: {
-        flex: 1,
         alignItems: 'center',
-        justifyContent: 'center'
+        width: '100%',
+        paddingTop: 30
     },
-    title: {
+    text: {
+        fontSize: 38,
+        color: '#7bbb5e',
         fontWeight: 'bold',
-        marginBottom: 15,
-        color: '#f58c22'
+        margin: 15
     },
-    btn: {
-        backgroundColor: '#7bbb5e',
-        height: 60,
-        width: 300,
-        borderColor: '#000',
-        borderWidth: 1.5,
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderColor: '#73b058',
-        marginTop: 30
+    mainImg: {
+        width: '100%',
+        height: 250
     },
-    btnText: {
-        color: '#fff'
-    },
-    slogan: {
-        fontSize: 20,
-        textAlign: 'center',
-        marginTop: 50,
-        color: '#4c5765'
+    phrase: {
+        color: '#cfcecc',
+        fontSize: 25
     }
 });

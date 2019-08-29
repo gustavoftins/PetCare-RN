@@ -25,9 +25,10 @@ export function Home({ navigation }) {
             <StatusBar backgroundColor="#7bbb5e"/>
             <SearchBar />
             <View style={{alignItems: 'center', marginTop: 15}}>
-                <Section title="Melhores Avaliados" imgpath={paths.star}/>
+                <Section title="Melhores Avaliados" imgpath={paths.star} onPress={()=>navigation.navigate('MostRated')}/>
                 <Section title="Pet Shops" imgpath={paths.petshop}/>
                 <Section title="Próximos a você" imgpath={paths.location}/>
+                <Section title="Favoritos" imgpath={paths.favorites}/>
             </View>
         </ScrollView>
     );
@@ -74,6 +75,7 @@ export default createBottomTabNavigator({
 
 const paths = {
     petshop: require('../../assets/petshop.jpg'),
-    star: require('../../assets/startest.jpg'),
-    location: require('../../assets/location.png')
+    star: require('../../assets/star.png'),
+    location: require('../../assets/location.png'),
+    favorites: require('../../assets/favorites.jpg')
 }

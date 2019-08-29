@@ -10,7 +10,12 @@ import Company from './src/pages/Company/index';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 
 const AppStackNavigator = createStackNavigator({
-    InitialPage: Opening,
+    InitialPage: {
+      screen: Opening,
+      navigationOptions: {
+        header: null
+      }
+    },
     Signup: Signup,
     Signin: Signin,
     Home: { 
