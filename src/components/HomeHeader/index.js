@@ -8,11 +8,8 @@ import styles from './styles';
 
 export default function HomeHeader() {
     return(
-        <View style={styles.container}>
-            <Title title="Explore"/>
-            <View style={styles.background}>
-                <TextInput placeholder="Pesquisar" style={styles.input}></TextInput>
-            </View>
-        </View>
+       <View style={styles.container}>
+           <Text style={styles.title}>Explore</Text>
+       </View>
     );
 }

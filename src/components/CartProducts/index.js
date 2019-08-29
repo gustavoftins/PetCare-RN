@@ -4,7 +4,7 @@ import styles from './styles';
 
 // import { Container } from './styles';
 
-export default function CartProducts({ productName, quantity, price}) {
+export default function CartProducts({ productName, quantity, price }) {
   return (
     <View style={styles.container}>
         <View style={styles.textContainer}>

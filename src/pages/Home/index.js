@@ -19,17 +19,12 @@ export function navigationOptions({ navigation }) {
 
 export function Home({ navigation }) {
     return (
-        <ScrollView style={{flexDirection: 'column', flex: 1}}>
-            <StatusBar backgroundColor="white" barStyle="dark-content" />
+        <ScrollView style={{height: '100%'}}>
             <HomeHeader />
-            <View style={{alignItems: 'center', width: '100%', flex: 1}} >
-                <Text style={styles.sectionText}>Serviços melhores avaliados</Text>
-                <TouchableOpacity onPress={()=>navigation.navigate("MostRated")} >
-                    <Image source={require('../../assets/most-rated.jpg')} style={styles.img} />
-                </TouchableOpacity>
-                <Section title="Creches" />
-                <Section title="Petshops" />
-                <Section title="Clinicas"/>
+            <View style={{alignItems: 'center', marginTop: 15}}>
+                <Section title="Melhores Avaliados" imgpath={paths.star}/>
+                <Section title="Pet Shops" imgpath={paths.petshop}/>
+                <Section title="Próximos a você" imgpath={paths.location}/>
             </View>
         </ScrollView>
     );
@@ -76,6 +71,6 @@ export default createBottomTabNavigator({
 
 const paths = {
     petshop: require('../../assets/petshop.jpg'),
-    clinica: require('../../assets/clinica.jpeg'),
-    creches: require('../../assets/creches.jpg')
+    star: require('../../assets/startest.jpg'),
+    location: require('../../assets/location.png')
 }

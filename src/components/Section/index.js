@@ -5,11 +5,15 @@ import styles from './styles';
 
 export default function Section({ title, imgpath }) {
     return(
-        <View style={[styles.section]}>
-            <TouchableOpacity>
-                <Text style={styles.title}>{title}</Text>
-                <Image source={imgpath} style={styles.img} />
-            </TouchableOpacity>
-        </View>
+        <TouchableOpacity style={styles.btn}>
+            <View style={[styles.section]}>
+                <View style={styles.imgContainer}>
+                    <Image style={styles.img} source={imgpath}/>
+                </View>
+                <View style={styles.titleContainer}>
+                    <Text style={styles.text}>{title}</Text>
+                </View>
+            </View>
+        </TouchableOpacity>
     );
 }
