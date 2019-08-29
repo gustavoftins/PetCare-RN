@@ -35,7 +35,7 @@ export function Home({ navigation }) {
 }
 
 export default createBottomTabNavigator({
-    Home: { 
+    Início: { 
         screen: Home,
         navigationOptions: {
             tabBarLabel: null,
@@ -47,7 +47,7 @@ export default createBottomTabNavigator({
             }
         }
      },
-    Cart: { 
+    Carrinho: { 
         screen: Cart,
         navigationOptions: {
             tabBarLabel: null,
@@ -56,10 +56,10 @@ export default createBottomTabNavigator({
             ),
             tabBarOptions: {
                 activeTintColor: '#7bbb5e'
-            }
+            },
         } 
     },
-    Settings: { screen:
+    Configurações: { screen:
          Settings,
          navigationOptions: {
              tabBarLabel: null,

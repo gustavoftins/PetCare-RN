@@ -4,7 +4,7 @@ export default StyleSheet.create({
     container: {
         flexDirection: 'row',
         maxWidth: '100%',
-        marginLeft: 15,
+        paddingLeft: 15,
         borderBottomColor: '#dedede',
         borderBottomWidth: 0.5,
         borderTopColor: '#dedede',

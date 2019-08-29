@@ -18,8 +18,8 @@ export default function Opening({ navigation }) {
             <Text style={styles.text}>PetCare</Text>
             <Text style={styles.phrase}>Em prol do bem-estar do seu pet</Text>
             <Image style={styles.mainImg}source={require('../../assets/main.jpg')}/>
-            <SecondaryButton text="Entrar"/>
-            <SecondaryButton text="Cadastrar"/>
+            <SecondaryButton text="Entrar" onPress={()=>navigation.navigate("Signin")}/>
+            <SecondaryButton text="Cadastrar" onPress={()=>navigation.navigate("Signup")}/>
         </View>
     );
 }

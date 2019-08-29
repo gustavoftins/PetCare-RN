@@ -8,7 +8,7 @@ export default StyleSheet.create({
         borderBottomWidth: 0.5,
         borderTopColor: '#dedede',
         borderTopWidth: 0.5,
-        height: 80,
+        height: 155,
         paddingLeft: 5,
     },
     img: {

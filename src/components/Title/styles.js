@@ -10,6 +10,7 @@ export default StyleSheet.create({
         borderBottomWidth: 5,
         width: '55%',
         padding: 15,
-        margin: 30
+        margin: 30,
+        height: '10%'
     }
 });
