@@ -5,7 +5,7 @@ import Box from '../../components/Box/index';
 import styles from './styles';
 import Title from '../../components/Title/index';
 
-export default function Settings() {
+export default function Settings({ navigation }) {
   const paths = {
     credentials: require('../../assets/credentials.png'),
     addresses: require('../../assets/address.png'),
@@ -18,6 +18,7 @@ export default function Settings() {
           <Box icon={paths.credentials} 
             title="Meus Dados"
             description="sdfdkfdksfsdfsdfsdfkdsfdsf"
+            onPress={() => navigation.navigate('Profile')}
           />
           <Box icon={paths.addresses}
             title="Endereços"

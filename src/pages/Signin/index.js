@@ -5,6 +5,7 @@ import NewInput from "../../components/Input/input";
 import NewButton from "../../components/Button/button";
 import styles from './styles';
 import { NavigationEvents } from 'react-navigation';
+import api from '../../services/api'
 
 export default function Signin({ navigation }) {
 
@@ -14,21 +15,26 @@ export default function Signin({ navigation }) {
     }
 
     const [user, setUser] = useState(INITIAL_STATE);
+    const [error, setError] = useState('');
 
-    function handleLogin() {
+    async function handleLogin() {
 
-        navigation.navigate('Home');
-        alert(user.email)
+        const { email, password} = user;
+
+        await api.post("/auth/login", JSON.stringify(user)).then(res => {
+
+        })
     }
     return (
         <View style={styles.container}>
             <Image 
                 source={require('../../assets/dog.png')}
             />
-            <NewInput placeholder="E-mail" onChangeText={e => setUser({ ...user, email: e.target.value})}/>
-            <NewInput placeholder="Senha" onChangeText={e => setUser({ ...user, password: e.target.value})} />
+            <NewInput placeholder="E-mail" onChangeText={(text) => setUser({email:text})}/>
+            <NewInput placeholder="Senha" onChangeText={(text) => setUser({password:text})}
+            secureTextEntry={true} />
             <NewButton text="Entrar"
-                onPress={handleLogin}
+                onPress={() => navigation.navigate("Home")}
             />
         </View>
     );

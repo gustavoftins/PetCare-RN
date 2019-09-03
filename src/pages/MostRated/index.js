@@ -3,6 +3,7 @@ import { View, StyleSheet,ScrollView, TouchableOpacity } from 'react-native';
 import styles from './styles';
 import CompanyCard from '../../components/Cards/Company/index';
 // import { Container } from './styles';
+import TabNavigator from '../Home/index';
 
 export default function MostRated({ navigation }) {
     const paths = {
@@ -16,7 +17,6 @@ export default function MostRated({ navigation }) {
           description="dsjifjdsifsjdfidsjfisjfisfjsdifjdsifsdifj"
           status="Aberto"
         />
-
         <CompanyCard onPress={()=>navigation.navigate('Company')}
         imgpath={paths.central} title="Central PetShop" description="difjdsifjsdifjdsif" />
         <CompanyCard onPress={()=>navigation.navigate("Home")} imgpath={paths.central} title="Central PetShop" description="difjdsifjsdifjdsif" status="Aberto" />
@@ -28,6 +28,9 @@ export default function MostRated({ navigation }) {
         <CompanyCard imgpath={paths.central} title="Central PetShop" description="difjdsifjsdifjdsif" />
         <CompanyCard imgpath={paths.central} title="Central PetShop" description="difjdsifjsdifjdsif" />
         <CompanyCard imgpath={paths.central} title="Central PetShop" description="difjdsifjsdifjdsif" />
+        <View style={{display: 'none'}}>
+          <TabNavigator />
+        </View>
     </ScrollView>
   );
 }

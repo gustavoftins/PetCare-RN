@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, StatusBar } from 'react-native';
 
-import { createBottomTabNavigator } from 'react-navigation';
+import { createBottomTabNavigator, createAppContainer } from 'react-navigation';
 
 import Cart from '../Cart/index';
 import Settings from '../Settings/index';
@@ -34,7 +34,7 @@ export function Home({ navigation }) {
     );
 }
 
-export default createBottomTabNavigator({
+const bottomNavigator = createBottomTabNavigator({
     Início: { 
         screen: Home,
         navigationOptions: {
@@ -72,6 +72,10 @@ export default createBottomTabNavigator({
         }
     }
 });
+
+const App = createAppContainer(bottomNavigator);
+
+export default App;
 
 const paths = {
     petshop: require('../../assets/petshop.jpg'),
