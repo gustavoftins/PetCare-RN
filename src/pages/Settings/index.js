@@ -23,6 +23,7 @@ export default function Settings({ navigation }) {
           <Box icon={paths.addresses}
             title="Endereços"
             description="adjisadjksad"
+            onPress={() => navigation.navigate("Addresses")}
           />
           <Box icon={paths.heart}
             title="Favoritos"
