@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { StyleSheet, Text, View, Image, AsyncStorage } from 'react-native';
 
 import NewInput from "../../components/Input/input";
 import NewButton from "../../components/Button/button";
 import styles from './styles';
 import { NavigationEvents } from 'react-navigation';
 import api from '../../services/api'
+
 
 export default function Signin({ navigation }) {
 
@@ -18,12 +19,13 @@ export default function Signin({ navigation }) {
     const [error, setError] = useState('');
 
     async function handleLogin() {
+        const { email, password } = user;
 
-        const { email, password} = user;
-
-        await api.post("/auth/login", JSON.stringify(user)).then(res => {
-
-        })
+        try{
+            const response = await api.post("/auth/login", JSON.stringify(user))
+        }catch(err){
+            alert(err)
+        }
     }
     return (
         <View style={styles.container}>
@@ -34,7 +36,7 @@ export default function Signin({ navigation }) {
             <NewInput placeholder="Senha" onChangeText={(text) => setUser({password:text})}
             secureTextEntry={true} />
             <NewButton text="Entrar"
-                onPress={() => navigation.navigate("Home")}
+                onPress={handleLogin}
             />
         </View>
     );
