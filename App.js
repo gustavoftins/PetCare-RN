@@ -8,6 +8,7 @@ import MostRated from './src/pages/MostRated/index';
 import Company from './src/pages/Company/index';
 import Profile from './src/pages/Profile/index';
 import Addresses from './src/pages/Addresses/index'
+import PetShops from  './src/pages/PetShops/index';
 
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 
@@ -29,7 +30,8 @@ const AppStackNavigator = createStackNavigator({
     MostRated: MostRated,
     Company: Company,
     Profile: Profile,
-    Addresses: Addresses
+    Addresses: Addresses,
+    PetShops: PetShops
 });
 
 class App extends React.Component {

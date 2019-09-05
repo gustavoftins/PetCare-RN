@@ -36,7 +36,7 @@ export function Home({ navigation }) {
             <SearchBar />
             <View style={{alignItems: 'center', marginTop: 15}}>
                 <Section title="Melhores Avaliados" imgpath={paths.star} onPress={()=>navigation.navigate('MostRated')}/>
-                <Section title="Pet Shops" imgpath={paths.petshop}/>
+                <Section title="Pet Shops" imgpath={paths.petshop} onPress={() =>navigation.navigate("PetShops")} />
                 <Section title="Próximos a você" imgpath={paths.location}/>
                 <Section title="Favoritos" imgpath={paths.favorites}/>
             </View>
