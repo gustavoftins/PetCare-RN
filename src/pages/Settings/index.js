@@ -5,6 +5,8 @@ import Box from '../../components/Box/index';
 import styles from './styles';
 import Title from '../../components/Title/index';
 
+import { logout } from '../../services/auth';
+
 export default function Settings({ navigation }) {
   const paths = {
     credentials: require('../../assets/credentials.png'),
@@ -32,6 +34,7 @@ export default function Settings({ navigation }) {
           <Box icon={paths.exit}
             title="Sair"
             description="fdjsifjdskfjsdkfjdskf"
+            onPress={logout}
           />
       </View>
     );

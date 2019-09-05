@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Image, AsyncStorage } from 'react-native';
-
+import { TOKEN_KEY, isAuthenticated } from '../../services/auth';
 import NewInput from "../../components/Input/input";
 import NewButton from "../../components/Button/button";
 import styles from './styles';
@@ -17,6 +17,12 @@ export default function Signin({ navigation }) {
 
     const [user, setUser] = useState(INITIAL_STATE);
     const [error, setError] = useState('');
+
+    useEffect(() => {
+        if(isAuthenticated()) {
+            navigation.navigate('Home');
+        }
+    },[navigation.navigate])
 
     async function handleLogin() {
 
@@ -40,7 +46,7 @@ export default function Signin({ navigation }) {
        await api.post("/auth/login", JSON.stringify(user)).then(response => {
            const { token, user } = response.data
            AsyncStorage.multiSet([
-               ['token', token],
+               [TOKEN_KEY, token],
                ['user', user]
            ])
            navigation.navigate("Home");

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, StatusBar } from 'react-native';
 
 import { createBottomTabNavigator, createAppContainer } from 'react-navigation';
@@ -11,6 +11,9 @@ import HomeHeader from '../../components/HomeHeader/index';
 import Section from '../../components/Section/index';
 import NewButton from '../../components/Button/button';
 import SearchBar from '../../components/SearchBar/index';
+import { isAuthenticated } from '../../services/auth';
+import { IfObservable } from 'rxjs/observable/IfObservable';
+
 
 export function navigationOptions({ navigation }) {
     return {
@@ -19,6 +22,13 @@ export function navigationOptions({ navigation }) {
 }
 
 export function Home({ navigation }) {
+
+    useEffect(() =>{
+        if(!isAuthenticated){
+            navigation.navigate("Home")
+        }
+    },[navigation.navigate])
+
     return (
         <ScrollView style={{height: '100%'}}>
             <HomeHeader />
