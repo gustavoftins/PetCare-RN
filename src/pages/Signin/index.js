@@ -4,8 +4,7 @@ import { TOKEN_KEY, isAuthenticated } from '../../services/auth';
 import NewInput from "../../components/Input/input";
 import NewButton from "../../components/Button/button";
 import styles from './styles';
-import { NavigationEvents } from 'react-navigation';
-import api from '../../services/api'
+import api from '../../services/api';
 
 
 export default function Signin({ navigation }) {
@@ -19,10 +18,10 @@ export default function Signin({ navigation }) {
     const [error, setError] = useState('');
 
     useEffect(() => {
-        if(isAuthenticated()) {
-            navigation.navigate('Home');
-        }
-    },[navigation.navigate])
+        //if(isAuthenticated()) {
+        //    navigation.navigate('Home');
+        //}
+    },[])
 
     async function handleLogin() {
 
@@ -44,11 +43,10 @@ export default function Signin({ navigation }) {
        }
 
        await api.post("/auth/login", JSON.stringify(user)).then(response => {
-           const { token, user } = response.data
-           AsyncStorage.multiSet([
-               [TOKEN_KEY, token],
-               ['user', user]
-           ])
+           const { accessToken } = response.data;
+           console.log(response.data);
+           console.log(accessToken);
+           AsyncStorage.setItem('jwtToken', accessToken);
            navigation.navigate("Home");
        }).catch(error => {
            switch(error.message){

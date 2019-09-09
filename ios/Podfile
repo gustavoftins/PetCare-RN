@@ -29,7 +29,9 @@ target 'petcare' do
 
   pod 'ReactNativeNavigation', :path => '../node_modules/react-native-navigation'
 
-  pod 'RNFS', :path => '../node_modules/react-native-fs'
+
+
+  pod 'RNCAsyncStorage', :path => '../node_modules/@react-native-community/async-storage'
 
   target 'petcareTests' do
     inherit! :search_paths

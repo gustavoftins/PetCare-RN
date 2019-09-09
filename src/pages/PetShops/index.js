@@ -20,9 +20,10 @@ export default function PetShops({ navigation }) {
     }
 
     renderItem = ({ item }) => (
-        <CompanyCard imgpath={item.avatar} 
+        <CompanyCard 
             title={item.companyName}
             status={item.status}
+            description={item.description}
         />
     )
 
