@@ -11,6 +11,10 @@ import Addresses from './src/pages/Addresses/index'
 import PetShops from './src/pages/PetShops/index';
 import { TOKEN_KEY } from './src/services/auth';
 
+
+import AsyncStorage from '@react-native-community/async-storage';
+
+
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 
 const AppStackNavigator = createStackNavigator({

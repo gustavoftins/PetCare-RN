@@ -1,5 +1,5 @@
 import api from './api';
-import { AsyncStorage } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 
 export const TOKEN_KEY = 'jwtToken';
 export const getToken = () => AsyncStorage.getItem(TOKEN_KEY);

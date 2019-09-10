@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Image, AsyncStorage } from 'react-native';
+import { StyleSheet, Text, View, Image } from 'react-native';
 import { TOKEN_KEY, isAuthenticated } from '../../services/auth';
 import NewInput from "../../components/Input/input";
 import NewButton from "../../components/Button/button";
 import styles from './styles';
 import api from '../../services/api';
-
+import AsyncStorage from '@react-native-community/async-storage';
 
 export default function Signin({ navigation }) {
 

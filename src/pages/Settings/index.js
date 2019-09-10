@@ -1,5 +1,7 @@
 import React from 'react';
-import { View, Text, AsyncStorage } from 'react-native';
+import { View, Text, ScrollView } from 'react-native';
+
+import AsyncStorage from '@react-native-community/async-storage'
 
 import Box from '../../components/Box/index';
 import styles from './styles';
@@ -24,6 +26,7 @@ export default function Settings({ navigation }) {
     }
   }
     return (
+    <ScrollView>
       <View>
        <Title title="Configurações" />
           <Box icon={paths.credentials} 
@@ -46,5 +49,6 @@ export default function Settings({ navigation }) {
             onPress={logout}
           />
       </View>
+      </ScrollView>
     );
 }

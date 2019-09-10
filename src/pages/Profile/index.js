@@ -1,27 +1,43 @@
 import React, { useState, useEffect } from 'react';
-import { View, Image, Text, AsyncStorage } from 'react-native';
+import { View, Image, Text } from 'react-native';
 import styles from './styles';
 import api from '../../services/api';
 import { TOKEN_KEY } from '../../services/auth';
+import AsyncStorage from '@react-native-community/async-storage';
+
 
 export default function Profile() {
 
-  const [token, setToken] = useState('');
-  const [user, setUser] = useState();
+  const INITIAL_STATE = {
+    id: '',
+    cpf: '',
+    completeName: '',
+    email: '',
+    phoneNumber: '',
+    address:{
+      street: '',
+      placeNumber: '',
+      complement: '',
+      neighborhood: '',
+      cep: '',
+      city: '',
+      state: '',
+    },
+    favorites: [],
+  }
+
+  const[user, setUser] = useState();
 
   async function getProfile() {
-    let token = '';
-    AsyncStorage.getItem(TOKEN_KEY).then(res => {
-      token = res;
-    });
-    console.log(token);
+
+    let token = await AsyncStorage.getItem(TOKEN_KEY);
     await api.get('/users/profile-user', {
       headers: {
         'Authorization': `Bearer ${token}`,
       }
     }).then(response => {
       console.log(response.data);
-      setUser(response.data);
+      setUser({ ...response.data });
     }).catch(err =>{
       console.log(err);
     })
@@ -29,6 +45,7 @@ export default function Profile() {
 
   useEffect(() => {
     getProfile();
+    console.log(user);
   },[])
 
   return (
