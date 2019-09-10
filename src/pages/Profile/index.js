@@ -26,7 +26,7 @@ export default function Profile() {
     favorites: [],
   }
 
-  const[user, setUser] = useState();
+  const [user, setUser] = useState(INITIAL_STATE);
 
   async function getProfile() {
 
@@ -37,7 +37,9 @@ export default function Profile() {
       }
     }).then(response => {
       console.log(response.data);
-      setUser({ ...response.data });
+      const { id, cpf, completeName, email, phoneNumber, address, favorites} = response.data;
+      setUser({ ...user,id: id, cpf: cpf, completeName: completeName, email: email, phoneNumber: phoneNumber, address: { ...address }, favorites: [...favorites] });
+      AsyncStorage.setItem('user', user);
     }).catch(err =>{
       console.log(err);
     })
@@ -45,8 +47,13 @@ export default function Profile() {
 
   useEffect(() => {
     getProfile();
-    console.log(user);
   },[])
+
+  useEffect(() => {
+    console.log(user);
+    let user1 = AsyncStorage.getItem('user');
+    console.log(user1.completeName);
+  }, [user])
 
   return (
     <View style={styles.container}>
@@ -55,15 +62,15 @@ export default function Profile() {
       </View>
       <Text style={styles.label}>Nome</Text>
       <View style={styles.contentArea}>
-        <Text style={styles.content}>{user}</Text>
+        <Text style={styles.content}>{user.completeName}</Text>
       </View>
       <Text style={styles.label}>E-mail</Text>
       <View style={styles.contentArea}>
-        <Text style={styles.content}>joaozinho23@gmail.com</Text>
+        <Text style={styles.content}>{user.email}</Text>
       </View>
       <Text style={styles.label}>CPF</Text>
       <View style={styles.contentArea}>
-        <Text style={styles.content}>105.597.339-76</Text>
+        <Text style={styles.content}>{user.cpf}</Text>
       </View>
     </View>
   );

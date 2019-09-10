@@ -31,7 +31,7 @@ export default function PetShops({ navigation }) {
     <View>
         <FlatList 
             data={companies}
-            keyExtractor={company => company.id}
+            keyExtractor={companies => companies.id.toString()}
             renderItem={renderItem}
         />
     </View>

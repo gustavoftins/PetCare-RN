@@ -12,7 +12,6 @@ import Section from '../../components/Section/index';
 import NewButton from '../../components/Button/button';
 import SearchBar from '../../components/SearchBar/index';
 import { isAuthenticated } from '../../services/auth';
-import { IfObservable } from 'rxjs/observable/IfObservable';
 
 
 export function navigationOptions({ navigation }) {

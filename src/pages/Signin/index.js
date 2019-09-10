@@ -6,6 +6,8 @@ import NewButton from "../../components/Button/button";
 import styles from './styles';
 import api from '../../services/api';
 import AsyncStorage from '@react-native-community/async-storage';
+import { NavigationActions } from 'react-navigation';
+
 
 export default function Signin({ navigation }) {
 
@@ -48,6 +50,8 @@ export default function Signin({ navigation }) {
            console.log(accessToken);
            AsyncStorage.setItem('jwtToken', accessToken);
            navigation.navigate("Home");
+           
+           
        }).catch(error => {
            switch(error.message){
                case "Network Error":
