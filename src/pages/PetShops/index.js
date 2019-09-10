@@ -24,6 +24,7 @@ export default function PetShops({ navigation }) {
             title={item.companyName}
             status={item.status}
             description={item.description}
+            onPress={() => navigation.navigate('Company', {companyId: item.id})}
         />
     )
 
