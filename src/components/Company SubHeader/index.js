@@ -3,16 +3,15 @@ import { View, Text, Image } from 'react-native';
 import styles from './styles';
 // import { Container } from './styles';
 
-export default function CompanySubHeader() {
+export default function CompanySubHeader({ companyName, companyDescription, companyStatus }) {
   return (
     <View style={styles.container}>
-        <Image source={require('../../assets/blumengarten.jpg')} style={styles.icon} />
+        <Image source={require('../../assets/defaultcompanylogo.png')} style={styles.icon} />
         <View style={styles.textContainer}>
-            <Text style={styles.name}>BlumenGarten Pet Shop</Text>
-            <Text style={styles.description}>They say hard work pays off I've been feeling paid off</Text>
-            <Text style={styles.status}>Fechado</Text>
+            <Text style={styles.name}>{companyName}</Text>
+            <Text style={styles.description}>{companyDescription}</Text>
+            <Text style={styles.status}>{companyStatus}</Text>
         </View>
-
     </View>
   );
 }

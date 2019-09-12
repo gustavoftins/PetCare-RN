@@ -50,9 +50,9 @@ export default function Profile() {
   },[])
 
   useEffect(() => {
-    console.log(user);
-    let user1 = AsyncStorage.getItem('user');
-    console.log(user1.completeName);
+    AsyncStorage.getItem(user).then((value) =>{
+      console.log(value);
+    })
   }, [user])
 
   return (
