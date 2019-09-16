@@ -3,7 +3,9 @@ import { View, Text, Image } from 'react-native';
 import styles from './styles';
 // import { Container } from './styles';
 
-export default function CompanySubHeader({ companyName, companyDescription, companyStatus }) {
+export default function CompanySubHeader({ companyName, companyDescription, companyStatus, favorite }) {
+
+
   return (
     <View style={styles.container}>
         <Image source={require('../../assets/defaultcompanylogo.png')} style={styles.icon} />
@@ -11,6 +13,8 @@ export default function CompanySubHeader({ companyName, companyDescription, comp
             <Text style={styles.name}>{companyName}</Text>
             <Text style={styles.description}>{companyDescription}</Text>
             <Text style={styles.status}>{companyStatus}</Text>
+        </View>
+        <View style={styles.favoriteContainer}>
         </View>
     </View>
   );

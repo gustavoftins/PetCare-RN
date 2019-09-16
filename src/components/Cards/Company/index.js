@@ -8,7 +8,7 @@ export default function Company({ onPress, imgpath, status, title, description }
         <View style={styles.container}>
             <View style={styles.card}>
             <View style={styles.imgContainer}>
-                <Image source={imgpath} style={styles.img}/>
+                <Image source={require('../../../assets/defaultcompanylogo.png')} style={styles.img}/>
               </View>
               <View style={styles.textContainer}>
                 <Text numberOfLines={1} style={styles.title}>{title}</Text>

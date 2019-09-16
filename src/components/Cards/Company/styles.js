@@ -5,7 +5,7 @@ export default StyleSheet.create({
    container: {
        flexDirection: 'row',
        width: '100%',
-       height: 120,
+       maxHeight: 120,
        justifyContent: 'center',
        marginTop: 5,
    },

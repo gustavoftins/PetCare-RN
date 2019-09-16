@@ -11,6 +11,8 @@ import Addresses from './src/pages/Addresses/index'
 import PetShops from './src/pages/PetShops/index';
 import { TOKEN_KEY } from './src/services/auth';
 import ServicePage from './src/pages/ServicePage/index';
+import SearchedCompanies from './src/pages/SearchedCompanies/index';
+
 
 
 import AsyncStorage from '@react-native-community/async-storage';
@@ -38,7 +40,8 @@ const AppStackNavigator = createStackNavigator({
   Profile: Profile,
   Addresses: Addresses,
   PetShops: PetShops,
-  ServicePage: ServicePage
+  ServicePage: ServicePage,
+  SearchedCompanies: SearchedCompanies
 });
 
 class App extends React.Component {

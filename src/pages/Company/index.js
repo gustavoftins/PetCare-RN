@@ -8,6 +8,7 @@ import SubHeader from '../../components/Company SubHeader/index';
 import Product from '../../components/Product/index';
 import Service from '../../components/ServiceCard/index';
 import api from '../../services/api';
+import AsyncStorage from '@react-native-community/async-storage';
 
 
 export default function Company({ navigation }) {
@@ -17,6 +18,8 @@ export default function Company({ navigation }) {
   const [products, setProducts] = useState([]);
 
   const [services, setServices] = useState([]);
+
+  const [user, setUser] = useState({});
 
   const id = navigation.getParam('companyId');
 
@@ -41,11 +44,27 @@ export default function Company({ navigation }) {
     })
   }
 
+  async function getUser(){
+    try{
+      await AsyncStorage.getItem('user').then((value) => {
+        setUser(JSON.parse(value));
+      })
+    }catch(err){
+
+    }
+
+  }
+
+  useEffect(() => {
+    console.log(user);
+  },[user])
+
   useEffect(() =>{
     loadCompanyById(id);
     if(id){
       getProducts(id, 0);
       getServices(id, 0);
+      getUser();
     }
   },[])
 

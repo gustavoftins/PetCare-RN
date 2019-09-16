@@ -25,7 +25,6 @@ export default function PetShops({ navigation }) {
             status={item.status}
             description={item.description}
             onPress={() => navigation.navigate('Company', {companyId: item.id})}
-            imgpath={item.avatar}
         />
     )
 

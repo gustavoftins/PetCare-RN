@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
     container: {
-        width: '100%',
+        minWidth: '100%',
         flexDirection: 'row',
         padding: 10,
         borderBottomColor: '#e6e6e6',
@@ -18,7 +18,7 @@ export default StyleSheet.create({
         marginRight: 5
     },
     description: {
-        maxWidth: '90%',
+        maxWidth: '70%',
         color: '#d9d9d9',
         fontSize: 15
     },
@@ -30,5 +30,15 @@ export default StyleSheet.create({
     status: {
         color: '#ec910a',
         fontSize: 12
+    },
+    favorite: {
+        height: 20,
+        width: 20
+    },
+    favoriteContainer: {
+        flexDirection: 'row'
+    },
+    textContainer: {
+        width: '70%'
     }
 });

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, StatusBar } from 'react-native';
 
 import { createBottomTabNavigator, createAppContainer } from 'react-navigation';
@@ -12,6 +12,7 @@ import Section from '../../components/Section/index';
 import NewButton from '../../components/Button/button';
 import SearchBar from '../../components/SearchBar/index';
 import { isAuthenticated } from '../../services/auth';
+import api from '../../services/api';
 
 
 export function navigationOptions({ navigation }) {
@@ -22,17 +23,34 @@ export function navigationOptions({ navigation }) {
 
 export function Home({ navigation }) {
 
-    useEffect(() =>{
-        if(!isAuthenticated){
-            navigation.navigate("Home")
-        }
-    },[navigation.navigate])
+    const [searchParam, setSearchParam] = useState('');
+    const [searchedCompanies, setSearchedCompanies] = useState([]);
+    const [totalPages, setTotalPages] = useState(0);
+    const [actPage, setActPage] = useState(0);
+    const [searchText, setSearchText] = useState('');
 
+    async function searchByCompanyName(page, text) {
+        console.log(searchText);
+        if(searchText.length !== '') {
+            await api.get(`/companies-searched/${page}/${text}`).then(res => {
+                setTotalPages(res.data.totalPages);
+                setActPage(res.data.number);
+                setSearchedCompanies(res.data.content);
+            })
+        }   
+    }
+
+    useEffect(() => {
+        if(searchedCompanies.length > 0 ){
+            navigation.navigate('SearchedCompanies', {searchedCompanies: searchedCompanies, totalPages, actPage});
+        }
+
+    },[searchedCompanies])
     return (
         <ScrollView style={{height: '100%'}}>
             <HomeHeader />
             <StatusBar backgroundColor="#7bbb5e"/>
-            <SearchBar />
+            <SearchBar onPress={() => searchByCompanyName(0, searchText)} onChangeText={(text) => setSearchText(text)} />
             <View style={{alignItems: 'center', marginTop: 15}}>
                 <Section title="Melhores Avaliados" imgpath={paths.star} onPress={()=>navigation.navigate('MostRated')}/>
                 <Section title="Pet Shops" imgpath={paths.petshop} onPress={() =>navigation.navigate("PetShops")} />
