@@ -15,12 +15,7 @@ export default function CartProducts({ productName, quantity, price }) {
         <View style={styles.iconsContainer}>
             <View>
                 <TouchableOpacity>
-                    <Image style={[styles.icon, styles.firstIcon]} source={require('../../assets/minus.png')}/>
-                </TouchableOpacity>
-            </View>
-            <View>
-                <TouchableOpacity>
-                    <Image style={styles.icon} source={require('../../assets/plus.png')} />
+                    <Text>Remover Item</Text>
                 </TouchableOpacity>
             </View>
         </View>

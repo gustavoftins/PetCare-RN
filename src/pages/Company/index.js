@@ -1,19 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import { View, ScrollView, FlatList } from 'react-native';
+import { View, ScrollView, FlatList , Text, TouchableOpacity, StyleSheet } from 'react-native';
 import styles from './styles';
 import { createMaterialTopTabNavigator } from 'react-navigation';
 // import { Container } from './styles';
 
 import SubHeader from '../../components/Company SubHeader/index';
 import Product from '../../components/Product/index';
-import Services from '../Services/index';
+import Service from '../../components/ServiceCard/index';
 import api from '../../services/api';
+
 
 export default function Company({ navigation }) {
 
   const [company, setCompany] = useState({});
 
   const [products, setProducts] = useState([]);
+
+  const [services, setServices] = useState([]);
 
   const id = navigation.getParam('companyId');
 
@@ -31,34 +34,72 @@ export default function Company({ navigation }) {
     })
   }
 
+  async function getServices(id, page){
+    await api.get(`/company-services/${id}/${page}`).then(res => {
+      console.log(res.data.content);
+      setServices(services.concat(res.data.content));
+    })
+  }
+
   useEffect(() =>{
     loadCompanyById(id);
     if(id){
       getProducts(id, 0);
+      getServices(id, 0);
     }
   },[])
 
-  renderItem = ({ item }) => (
-    <Product 
+  renderServices = ({ item }) => (
+    <Product
       price={item.price}
       name={item.name}
       description={item.description}
-    />
+      />
   )
 
   return (
-    <ScrollView style={{        backgroundColor: '#f5f5f5',}}>
+    <ScrollView style={{        backgroundColor: '#f5f5f5', height: '100%'}}>
       <View style={{width: '100%', alignItems: 'center'}}>
           <SubHeader companyName={company.companyName} companyDescription={company.description} companyStatus={company.status} />
+          <View style={{width: '100%', alignItems: 'center'}}>
+          <Text style={styles.title}>Serviços</Text>
+          <FlatList 
+              data={services}
+              keyExtractor={services => services.id.toString()}
+              renderItem={({ item }) => (
+                <TouchableOpacity style={{height: 120}}
+                  onPress={() => navigation.navigate('ServicePage', {service: item, company})}
+                >
+                <Service
+                  name={item.name}
+                  price={item.price}
+                  description={item.description}
+                  service={item}
+                />
+                </TouchableOpacity>
+              )}
+            />
+          <Text style={styles.title}>Produtos</Text>
           <FlatList 
             data={products}
             keyExtractor={products => products.id.toString()}
-            renderItem={renderItem}
+            renderItem={({ item }) => (
+              <TouchableOpacity onPress={() => navigation.navigate('ServicePage')}>
+              <Product 
+              price={item.price}
+              name={item.name}
+              description={item.description}
+              />
+              </TouchableOpacity>
+            )}
           />
+          </View>
         </View>
     </ScrollView>
   );
 }
+
+
 
 // export default createMaterialTopTabNavigator({
 //     Produtos: Company,

@@ -28,6 +28,20 @@ export default function Profile() {
 
   const [user, setUser] = useState(INITIAL_STATE);
 
+  async function storingUser(){
+    try{
+      await AsyncStorage.setItem('user', JSON.stringify(user));
+    }catch(err){
+      console.log(err);
+    }
+  }
+
+  async function teste(){
+    await AsyncStorage.getItem('user').then((value) =>{
+      console.log(JSON.parse((value)));
+    })
+  }
+
   async function getProfile() {
 
     let token = await AsyncStorage.getItem(TOKEN_KEY);
@@ -36,10 +50,8 @@ export default function Profile() {
         'Authorization': `Bearer ${token}`,
       }
     }).then(response => {
-      console.log(response.data);
       const { id, cpf, completeName, email, phoneNumber, address, favorites} = response.data;
       setUser({ ...user,id: id, cpf: cpf, completeName: completeName, email: email, phoneNumber: phoneNumber, address: { ...address }, favorites: [...favorites] });
-      AsyncStorage.setItem('user', user);
     }).catch(err =>{
       console.log(err);
     })
@@ -50,10 +62,10 @@ export default function Profile() {
   },[])
 
   useEffect(() => {
-    AsyncStorage.getItem(user).then((value) =>{
-      console.log(value);
-    })
-  }, [user])
+    console.log(user);
+    storingUser();
+    teste();
+  },[user])
 
   return (
     <View style={styles.container}>
