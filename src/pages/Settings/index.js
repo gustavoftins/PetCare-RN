@@ -9,6 +9,7 @@ import Title from '../../components/Title/index';
 
 import { logout, TOKEN_KEY } from '../../services/auth';
 
+
 export default function Settings({ navigation }) {
   const paths = {
     credentials: require('../../assets/credentials.png'),
@@ -16,15 +17,12 @@ export default function Settings({ navigation }) {
     exit: require('../../assets/exit.png'),
     heart: require('../../assets/heart.png')
   }
-
   async function logoff(){
-    try{
-      await AsyncStorage.multiRemove([TOKEN_KEY, 'user'])
-      navigation.navigate('Home')
-    }catch(err){
-
-    }
+    await AsyncStorage.multiRemove([TOKEN_KEY, 'user']).then(() => {
+      navigation.navigate('InitialPage');
+    })
   }
+
     return (
     <ScrollView>
       <View>
@@ -39,14 +37,10 @@ export default function Settings({ navigation }) {
             description="adjisadjksad"
             onPress={() => navigation.navigate("Addresses")}
           />
-          <Box icon={paths.heart}
-            title="Favoritos"
-            description="saidjiasdjiasdj"
-          />
           <Box icon={paths.exit}
             title="Sair"
             description="fdjsifjdskfjsdkfjdskf"
-            onPress={logout}
+            onPress={logoff}
           />
       </View>
       </ScrollView>

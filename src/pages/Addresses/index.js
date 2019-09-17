@@ -70,7 +70,7 @@ export default function Addresses() {
     })
 
     console.log(address);
-    await api.post('/users/edit', JSON.stringify(address), {
+    await api.post('/address/edit', JSON.stringify(address), {
       headers: {
         'Authorization': `Bearer ${token}`,
       }
@@ -83,13 +83,13 @@ export default function Addresses() {
         <AddressBox />
         <Text>{message}</Text>
         <Text style={{ fontSize: 24, color: '#7bbb5e' }}>Alterar Endereço</Text>
-        <NewInput onChangeText={(text) => setAddress({ ...address, address: { street: text } })} placeholder="Rua" />
-        <NewInput onChangeText={(text) => setAddress({ ...address, address: { placeNumber: text } })} placeholder="Número" />
-        <NewInput onChangeText={(text) => setAddress({ ...address, address: { neighborhood: text } })} placeholder="Bairro" />
-        <NewInput onChangeText={(text) => setAddress({ ...address, address: { complement: text } })} placeholder="Complemento" />
-        <NewInput onChangeText={(text) => setAddress({ ...address, address: { cep: text } })} placeholder="CEP" />
-        <NewInput onChangeText={(text) => setAddress({ ...address.address, address: { city: text } })} placeholder="Cidade" />
-        <NewInput onChangeText={(text) => setAddress({ ...address.address, address: { state: text } })} placeholder="Estado" />
+        <NewInput onChangeText={(text) => setAddress({ ...address, address: { ...address.address, street: text } })} placeholder="Rua" />
+        <NewInput onChangeText={(text) => setAddress({ ...address, address: { ...address.address, placeNumber: text} })} placeholder="Número" />
+        <NewInput onChangeText={(text) => setAddress({ ...address, address: { ...address.address, neighborhood: text } })} placeholder="Bairro" />
+        <NewInput onChangeText={(text) => setAddress({ ...address, address: { ...address.address, complement: text } })} placeholder="Complemento" />
+        <NewInput onChangeText={(text) => setAddress({ ...address, address: { ...address.address, cep: text } })} placeholder="CEP" />
+        <NewInput onChangeText={(text) => setAddress({ ...address, address: { ...address.address, city: text } })} placeholder="Cidade" />
+        <NewInput onChangeText={(text) => setAddress({ ...address, address: { ...address.address, state: text } })} placeholder="Estado" />
         <NewButton text="Alterar" onPress={handleSubmit} />
       </View>
     </ScrollView>

@@ -1,8 +1,12 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { Text, StyleSheet, View, Image, Button, TouchableOpacity, StatusBar, ScrollView } from 'react-native';
 import SecondaryButton from '../../components/Button/SecondaryButton/index';
 
+import { TOKEN_KEY } from '../../services/auth';
+
 import styles from './styles';
+import AsyncStorage from '@react-native-community/async-storage';
+
 
 export function navigationOptions({ navigation }) {
     return {
@@ -11,6 +15,25 @@ export function navigationOptions({ navigation }) {
 }
 
 export default function Opening({ navigation }) {
+
+    const [token, setToken] = useState();
+
+    async function getUser(){
+        await AsyncStorage.getItem(TOKEN_KEY).then((value) =>{
+            setToken(value);
+        })
+    }
+
+    useEffect(() =>{
+        getUser();
+    }, [])
+
+    useEffect(() =>{
+        console.log(token);
+        if(token !== null && token !== undefined){
+            navigation.navigate('Home');
+        }
+    }, [token])
     return (
         <ScrollView>
             <View style={styles.container}>
