@@ -7,64 +7,89 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 export default function ServicePage({ navigation }) {
 
-    const INITIAL_STATE = {
-      completeName:'',
-      cpf: '',
-      address: {},
-      phoneNumber: '',
-      cnpj: '',
-      companyName: '',
-      services: [],
-      products: []
-    }
+  const INITIAL_STATE = {
+    completeName: '',
+    cpf: '',
+    address: {},
+    phoneNumber: '',
+    cnpj: '',
+    companyName: '',
+    services: [],
+    products: []
+  }
 
-    const service = navigation.getParam('service');
-    const company = navigation.getParam('company');
+  const service = navigation.getParam('service');
+  const company = navigation.getParam('company');
 
-    const [user, setUser] = useState({});
+  const [user, setUser] = useState({});
 
-    const [services, setServices] = useState([]);
+  const [services, setServices] = useState([]);
 
-    const [cartWithInfos, setCartWithInfos] = useState(INITIAL_STATE);
+  const [cartWithInfos, setCartWithInfos] = useState({});
 
-    useEffect(() =>{
-      setServices(services.concat(service));
-      getUser();
-    },[])
+  useEffect(() => {
+    getUser();
+    getCartFromStore();
 
-    useEffect(() => {
-      console.log(cartWithInfos);
-    },[cartWithInfos])
+  }, [])
 
-    async function addServiceToCart(){
+  useEffect(() => {
+    // setCartWithInfos({
+    //   ...cartWithInfos, completeName: user.completeName, cpf: user.cpf, address: { ...user.address }, phoneNumber: user.phoneNumber,
+    //   cnpj: company.cnpj, companyName: company.companyName, services: [...service], products: []
+    // });
 
-      setCartWithInfos({ ...cartWithInfos, completeName: user.completeName, cpf: user.cpf, address: { ...user.address }, phoneNumber: user.phoneNumber,
-      cnpj: company.cnpj, companyName: company.companyName, services: [...services], products: [] });
+  }, [user])
 
-      try{
-      await AsyncStorage.setItem('cartInfos', JSON.stringify(cartWithInfos));
-      }catch(err){
-        
+  useEffect(() => {
+    // if( cartWithInfos !== undefined && !cartWithInfos.services.includes(service)){
+    //   setServices(services.concat(service));
+    // }
+    console.log(cartWithInfos);
+  }, [cartWithInfos])
+
+  async function addServiceToCart() {
+
+    if (cartWithInfos) {
+      try {
+        await AsyncStorage.setItem('cartInfos', JSON.stringify(cartWithInfos));
+      } catch (err) {
+
       }
     }
+  }
 
-    async function getUser(){
-      try{
-        await AsyncStorage.getItem('user').then((value) => {
-          setUser(JSON.parse(value));
-        })
-      }catch(err){
-        console.log(err);
-      }
+
+
+  async function getUser() {
+    try {
+      await AsyncStorage.getItem('user').then((value) => {
+        setUser(JSON.parse(value));
+        console.log(JSON.parse(value))
+      })
+    } catch (err) {
+      console.log(err);
     }
+  }
+
+  async function getCartFromStore() {
+    try {
+      await AsyncStorage.getItem('cartInfos').then((value) => {
+        setCartWithInfos(JSON.parse(value));
+        console.log(JSON.parse(value ))
+      })
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   return (
     <View style={styles.container}>
-        <Text style={styles.companyName}>{company.companyName}</Text>
-        <Text style={styles.serviceName}>{service.name}</Text>
-        <Text style={styles.description}>{service.description}</Text>
-        <Text style={styles.price}>R${service.price}</Text>
-        <Button text='Adicionar ao Carrinho' onPress={addServiceToCart} />
+      <Text style={styles.companyName}>{company.companyName}</Text>
+      <Text style={styles.serviceName}>{service.name}</Text>
+      <Text style={styles.description}>{service.description}</Text>
+      <Text style={styles.price}>R${service.price}</Text>
+      <Button text='Adicionar ao Carrinho' onPress={addServiceToCart} />
     </View>
   );
 }

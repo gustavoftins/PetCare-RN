@@ -8,6 +8,7 @@ import api from '../../services/api';
 import AsyncStorage from '@react-native-community/async-storage';
 import { NavigationActions } from 'react-navigation';
 
+import ErrorMessage from '../../components/ErrorCard/index';
 
 export default function Signin({ navigation }) {
 
@@ -18,6 +19,7 @@ export default function Signin({ navigation }) {
 
     const [user, setUser] = useState(INITIAL_STATE);
     const [error, setError] = useState('');
+    const [errorCard, setErrorCard] = useState(false)
 
     useEffect(() => {
         //if(isAuthenticated()) {
@@ -31,16 +33,19 @@ export default function Signin({ navigation }) {
 
        if(email == '' || password == ''){
            setError("Preencha todos os campos");
+           setErrorCard(true);
            return;
        }else{
           if(!(user.email.includes('@') && user.email.includes('.com'))){
               setError("E-mail não válido");
+              setErrorCard(true);
               return;
           }
        }
 
        if(password.length > 100) {
            setError("Senha não válida");
+           setErrorCard(true);
            return;
        }
 
@@ -55,7 +60,8 @@ export default function Signin({ navigation }) {
        }).catch(error => {
            switch(error.message){
                case "Network Error":
-                   return setError("O servidor está temporariamente desligado");
+                   return setError("O servidor está temporariamente desligado")
+                   
                 case "Request failed with status code 404":
                     return setError("Não existe nenhuma empresa associada a este email.");
                 case "Request failed with status code 401":
@@ -73,9 +79,8 @@ export default function Signin({ navigation }) {
             <Image 
                 source={require('../../assets/dog.png')}
             />
-            <View>
-                <Text>{error}</Text>
-            </View>
+            { errorCard ? (<ErrorMessage message={error} /> ) : (<View/>)}
+            
             <NewInput placeholder="E-mail" onChangeText={(text) => setUser({ ...user, email: text})}/>
             <NewInput placeholder="Senha" onChangeText={(text) => setUser({ ...user, password: text})}
             secureTextEntry={true} />

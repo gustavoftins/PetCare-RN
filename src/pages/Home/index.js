@@ -55,7 +55,7 @@ export function Home({ navigation }) {
                 <Section title="Melhores Avaliados" imgpath={paths.star} onPress={()=>navigation.navigate('MostRated')}/>
                 <Section title="Pet Shops" imgpath={paths.petshop} onPress={() =>navigation.navigate("PetShops")} />
                 <Section title="Próximos a você" imgpath={paths.location}/>
-                <Section title="Favoritos" imgpath={paths.favorites}/>
+                <Section title="Favoritos" imgpath={paths.favorites} onPress={() => navigation.navigate('Favorites')} />
             </View>
         </ScrollView>
     );
