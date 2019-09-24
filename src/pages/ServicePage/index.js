@@ -25,61 +25,53 @@ export default function ServicePage({ navigation }) {
 
   const [services, setServices] = useState([]);
 
-  const [cartWithInfos, setCartWithInfos] = useState({});
+  const [cartWithInfos, setCartWithInfos] = useState(INITIAL_STATE);
+
+  const [cart, setCart] = useState(false);
 
   useEffect(() => {
-    getUser();
     getCartFromStore();
-
+    getUser();
   }, [])
 
   useEffect(() => {
-    // setCartWithInfos({
-    //   ...cartWithInfos, completeName: user.completeName, cpf: user.cpf, address: { ...user.address }, phoneNumber: user.phoneNumber,
-    //   cnpj: company.cnpj, companyName: company.companyName, services: [...service], products: []
-    // });
 
-  }, [user])
+    console.log(cartWithInfos)
 
-  useEffect(() => {
-    // if( cartWithInfos !== undefined && !cartWithInfos.services.includes(service)){
-    //   setServices(services.concat(service));
-    // }
-    console.log(cartWithInfos);
+    if(cartWithInfos === null){
+      setCart(false)
+    }else{
+      setCart(true)
+    }
   }, [cartWithInfos])
 
-  async function addServiceToCart() {
-
-    if (cartWithInfos) {
-      try {
-        await AsyncStorage.setItem('cartInfos', JSON.stringify(cartWithInfos));
-      } catch (err) {
-
-      }
-    }
-  }
-
-
-
-  async function getUser() {
-    try {
-      await AsyncStorage.getItem('user').then((value) => {
-        setUser(JSON.parse(value));
-        console.log(JSON.parse(value))
-      })
-    } catch (err) {
-      console.log(err);
-    }
+  async function getUser(){
+    await AsyncStorage.getItem('user').then((value) => {
+      setUser(JSON.parse(value));
+    })
   }
 
   async function getCartFromStore() {
     try {
       await AsyncStorage.getItem('cartInfos').then((value) => {
         setCartWithInfos(JSON.parse(value));
-        console.log(JSON.parse(value ))
+        console.log(JSON.parse(value));
       })
     } catch (err) {
       console.log(err);
+    }
+  }
+
+  async function addServiceToCart(){
+    if(cart){
+      if(cartWithInfos.companyName === company.companyName || cartWithInfos.companyName === ''){
+        await AsyncStorage.setItem('cartInfos', JSON.stringify({ completeName: user.completeName, cpf: user.cpf, address: user.address, phoneNumber: user.phoneNumber, cnpj: company.cnpj, companyName: company.companyName, services: cartWithInfos.services.concat(service) }));
+      }else{
+        console.log('empresa diferente');
+      }
+    }else{
+      setCartWithInfos({ ...cartWithInfos, completeName: user.completeName, cpf: user.cpf, address: user.address, phoneNumber: user.phoneNumber, cnpj: company.cnpj, companyName: company.companyName, services: [ ...services, service ]  });
+      await AsyncStorage.setItem('cartInfos', JSON.stringify({ completeName: user.completeName, cpf: user.cpf, address: user.address, phoneNumber: user.phoneNumber, cnpj: company.cnpj, companyName: company.companyName, services: [service] }));
     }
   }
 

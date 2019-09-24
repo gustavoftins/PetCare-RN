@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, FlatList } from 'react-native';
+import { View, FlatList, ScrollView } from 'react-native';
 
 import api from '../../services/api';
 
@@ -9,16 +9,19 @@ export default function Favorites({ navigation }) {
 
     const [favoriteCompanies, setFavoriteCompanies] = useState([]);
 
+    useEffect(() => {
+        loadFavorites(0);
+    }, [])
+
     async function loadFavorites(page){
         await api.get(`/users/favorites-list/${page}`).then(res => {
-            console.log(res.data.content);
-            setFavoriteCompanies(res.data.companies);
+            setFavoriteCompanies(res.data.content);
         })
     }
 
     useEffect(() => {
-        loadFavorites(0);
-    }, [])
+        console.log(favoriteCompanies)
+    }, [favoriteCompanies])
 
     renderItem = ({ item }) => (
         <CompanyCard 
@@ -30,13 +33,12 @@ export default function Favorites({ navigation }) {
     )
 
   return (
-    <View>
-        <FlatList 
-        
-        data={favoriteCompanies} 
+    <ScrollView style={{width: '100%', height: '100%'}}>    
+        <FlatList
+            data={favoriteCompanies}
             keyExtractor={item => item.id.toString()}
             renderItem={renderItem}
         />
-    </View>
+    </ScrollView>
   );
 }

@@ -148,7 +148,7 @@ export default function Company({ navigation }) {
             data={products}
             keyExtractor={products => products.id.toString()}
             renderItem={({ item }) => (
-              <TouchableOpacity onPress={() => navigation.navigate('ServicePage')}>
+              <TouchableOpacity onPress={() => navigation.navigate('ProductPage', {product: item, company})}>
               <Product 
               price={item.price}
               name={item.name}
