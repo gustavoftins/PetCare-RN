@@ -29,6 +29,8 @@ export default function ServicePage({ navigation }) {
 
   const [cart, setCart] = useState(false);
 
+  const [products, setProducts] = useState([]);
+
   useEffect(() => {
     getCartFromStore();
     getUser();
@@ -65,13 +67,13 @@ export default function ServicePage({ navigation }) {
   async function addServiceToCart(){
     if(cart){
       if(cartWithInfos.companyName === company.companyName || cartWithInfos.companyName === ''){
-        await AsyncStorage.setItem('cartInfos', JSON.stringify({ completeName: user.completeName, cpf: user.cpf, address: user.address, phoneNumber: user.phoneNumber, cnpj: company.cnpj, companyName: company.companyName, services: cartWithInfos.services.concat(service) }));
+        await AsyncStorage.setItem('cartInfos', JSON.stringify({ completeName: user.completeName, cpf: user.cpf, address: user.address, phoneNumber: user.phoneNumber, cnpj: company.cnpj, companyName: company.companyName, services: cartWithInfos.services.concat(service), products: [...products, ] }));
       }else{
         console.log('empresa diferente');
       }
     }else{
       setCartWithInfos({ ...cartWithInfos, completeName: user.completeName, cpf: user.cpf, address: user.address, phoneNumber: user.phoneNumber, cnpj: company.cnpj, companyName: company.companyName, services: [ ...services, service ]  });
-      await AsyncStorage.setItem('cartInfos', JSON.stringify({ completeName: user.completeName, cpf: user.cpf, address: user.address, phoneNumber: user.phoneNumber, cnpj: company.cnpj, companyName: company.companyName, services: [service] }));
+      await AsyncStorage.setItem('cartInfos', JSON.stringify({ completeName: user.completeName, cpf: user.cpf, address: user.address, phoneNumber: user.phoneNumber, cnpj: company.cnpj, companyName: company.companyName, services: [service], products: [...products, ] }));
     }
   }
 
