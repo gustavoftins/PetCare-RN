@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, ScrollView, TouchableOpacity, Text } from 'react-native';
+import { View, ScrollView, TouchableOpacity, Text, FlatList } from 'react-native';
 import CartProduct from '../../components/CartProducts/index';
 import Title from '../../components/Title/index';
 
@@ -12,46 +12,57 @@ export default function Cart() {
 
   useEffect(() => {
     getCartFromStorage();
-    console.log('oi')
+  }, [])
+
+
+  useEffect(() => {
+    console.log(cart);
   }, [cart])
 
   async function getCartFromStorage() {
     try {
-      await AsyncStorage.getItem('cartInfos').then((cartFromLocal) => {
-        console.log(JSON.parse(cartFromLocal));
-        setCart(cartFromLocal);
+      await AsyncStorage.getItem('cartInfos').
+      then((cartFromLocal) => {
+        setCart(JSON.parse(cartFromLocal));
       })
     } catch (err) {
 
     }
   }
 
+  async function removeServiceFromCart(service){
+    setCart({ ...cart, services: cart.service.filter(itemFromList => itemFromList !== service )})
+  }
+
+  async function cleanCart(){
+    setCart([]);
+    await AsyncStorage.removeItem('cartInfos');
+  }
+
+  renderItem = ({ item }) => {
+    <CartProduct
+      productName={item.name}
+      price={item.price}
+    />
+    console.log(item.price, item.name);
+  }
+
   return (
     <ScrollView>
-      <Title title="Carrinho" />
+      {/* <Title title="Carrinho" />
       <TouchableOpacity style={styles.btn}>
         <Text style={styles.cleanCart}>Limpar Carrinho</Text>
+      </TouchableOpacity> */}
+      <View>
+        <Title title="Carrinho" />
+        <TouchableOpacity style={styles.btn} onPress={cleanCart}>
+          <Text style={styles.cleanCart}>Limpar Carrinho</Text>
       </TouchableOpacity>
-      <CartProduct productName="Ração Malaca"
-        quantity="2"
-        price="196"
-      />
-      <CartProduct productName="Coleira azul"
-        quantity="1"
-        price="68"
-      />
-      <CartProduct productName="Petisco para gatos"
-        quantity="4"
-        price="16"
-      />
-      <CartProduct productName="Remédio"
-        quantity="1"
-        price="35"
-      />
-      <CartProduct productName="Motor de barco"
-        quantity="28"
-        price="22"
-      />
+      </View>
+      <Text>Serviços</Text>
+      { cart.services !== undefined ? cart.services.map(service => <CartProduct key={service.id} productName={service.name} price={service.price} onPress={() => removeServiceFromCart(service)} />) : console.log('sdjnsdjsd')}
+      <Text>Produtos</Text>
+      { cart.products !== undefined ? cart.products.map(product => <CartProduct key={product.id} productName={product.name} price={product.price} />) : console.log('sdjnsdjsd')}
     </ScrollView>
   );
 }

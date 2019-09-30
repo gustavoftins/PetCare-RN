@@ -4,7 +4,7 @@ import styles from './styles';
 
 // import { Container } from './styles';
 
-export default function CartProducts({ productName, quantity, price }) {
+export default function CartProducts({ productName, quantity, price, onPress }) {
   return (
     <View style={styles.container}>
         <View style={styles.textContainer}>
@@ -14,7 +14,7 @@ export default function CartProducts({ productName, quantity, price }) {
         </View>
         <View style={styles.iconsContainer}>
             <View>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={onPress}>
                     <Text>Remover Item</Text>
                 </TouchableOpacity>
             </View>
