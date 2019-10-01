@@ -17,32 +17,32 @@ export default function Settings({ navigation }) {
     exit: require('../../assets/exit.png'),
     heart: require('../../assets/heart.png')
   }
-  async function logoff(){
+  async function logoff() {
     await AsyncStorage.multiRemove([TOKEN_KEY, 'user']).then(() => {
       navigation.navigate('InitialPage');
     })
   }
 
-    return (
+  return (
     <ScrollView>
       <View>
-       <Title title="Configurações" />
-          <Box icon={paths.credentials} 
-            title="Meus Dados"
-            description="sdfdkfdksfsdfsdfsdfkdsfdsf"
-            onPress={() => navigation.navigate('Profile')}
-          />
-          <Box icon={paths.addresses}
-            title="Endereços"
-            description="adjisadjksad"
-            onPress={() => navigation.navigate("Addresses")}
-          />
-          <Box icon={paths.exit}
-            title="Sair"
-            description="fdjsifjdskfjsdkfjdskf"
-            onPress={logoff}
-          />
+        <Title title="Configurações" />
+        <Box icon={paths.credentials}
+          title="Meus Dados"
+          description="sdfdkfdksfsdfsdfsdfkdsfdsf"
+          onPress={() => navigation.navigate('Profile')}
+        />
+        <Box icon={paths.addresses}
+          title="Endereços"
+          description="adjisadjksad"
+          onPress={() => navigation.navigate("Addresses")}
+        />
+        <Box icon={paths.exit}
+          title="Sair"
+          description="fdjsifjdskfjsdkfjdskf"
+          onPress={logoff}
+        />
       </View>
-      </ScrollView>
-    );
+    </ScrollView>
+  );
 }

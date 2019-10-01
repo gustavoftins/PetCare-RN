@@ -17,25 +17,26 @@ export default function Cart() {
 
   useEffect(() => {
     console.log(cart);
+    reloadCart();
   }, [cart])
 
   async function getCartFromStorage() {
     try {
       await AsyncStorage.getItem('cartInfos').
-      then((cartFromLocal) => {
-        setCart(JSON.parse(cartFromLocal));
-      })
+        then((cartFromLocal) => {
+          setCart(JSON.parse(cartFromLocal));
+        })
     } catch (err) {
 
     }
   }
 
-  async function removeServiceFromCart(service){
-    setCart({ ...cart, services: cart.service.filter(itemFromList => itemFromList !== service )})
+  async function removeServiceFromCart(service) {
+    setCart({ ...cart, services: cart.services.filter(itemFromList => itemFromList !== service) })
   }
 
-  async function cleanCart(){
-    setCart([]);
+  async function cleanCart() {
+    setCart({});
     await AsyncStorage.removeItem('cartInfos');
   }
 
@@ -47,22 +48,21 @@ export default function Cart() {
     console.log(item.price, item.name);
   }
 
+  async function reloadCart() {
+    await AsyncStorage.setItem('cartInfos', JSON.stringify(cart));
+  }
+
   return (
     <ScrollView>
-      {/* <Title title="Carrinho" />
-      <TouchableOpacity style={styles.btn}>
+      <Text style={styles.pageTitle}>Carrinho</Text>
+      <TouchableOpacity style={styles.btn} onPress={cleanCart}>
         <Text style={styles.cleanCart}>Limpar Carrinho</Text>
-      </TouchableOpacity> */}
-      <View>
-        <Title title="Carrinho" />
-        <TouchableOpacity style={styles.btn} onPress={cleanCart}>
-          <Text style={styles.cleanCart}>Limpar Carrinho</Text>
       </TouchableOpacity>
-      </View>
-      <Text>Serviços</Text>
-      { cart.services !== undefined ? cart.services.map(service => <CartProduct key={service.id} productName={service.name} price={service.price} onPress={() => removeServiceFromCart(service)} />) : console.log('sdjnsdjsd')}
-      <Text>Produtos</Text>
-      { cart.products !== undefined ? cart.products.map(product => <CartProduct key={product.id} productName={product.name} price={product.price} />) : console.log('sdjnsdjsd')}
+      {cart.services === undefined || cart.services === undefined ? (<View style={styles.messageContainer}><Text style={styles.noProduct}>Não há produtos em seu carrinho</Text></View>) : (<Text></Text>)}
+      {cart.services !== undefined ? (<Text style={styles.subTitle}>Serviços</Text>) : (<Text></Text>)}
+      {cart.services !== undefined ? cart.services.map(service => <CartProduct key={service.id} productName={service.name} price={service.price} onPress={() => removeServiceFromCart(service)} />) : console.log('sdjnsdjsd')}
+      {cart.products !== undefined ? (<Text style={styles.subTitle}>Produtos</Text>) : (<Text></Text>)}
+      {cart.products !== undefined ? cart.products.map(product => <CartProduct key={product.id} productName={product.name} price={product.price} />) : console.log('sdjnsdjsd')}
     </ScrollView>
   );
 }
