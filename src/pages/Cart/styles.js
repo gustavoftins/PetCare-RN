@@ -23,6 +23,7 @@ export default StyleSheet.create({
     },
     messageContainer: {
         alignContent: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 });

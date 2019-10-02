@@ -8,7 +8,7 @@ export default function ServiceCard({ name, price, description }) {
   return (
       <View style={styles.container}>
           <Text style={styles.name}>{name}</Text>
-          <Text style={styles.description}>{description}</Text>
+          <Text style={styles.description} numberOfLines={2}>{description}</Text>
           <Text style={styles.price}>R${price}</Text>
       </View>
   );

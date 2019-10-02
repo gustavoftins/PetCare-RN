@@ -126,7 +126,8 @@ export default function Company({ navigation }) {
       <View style={{width: '100%', alignItems: 'center'}}>
           <SubHeader companyName={company.companyName} companyDescription={company.description} companyStatus={company.status} favorite={ isFavorite ? (require('../../assets/favorite.png')) : (require('../../assets/notfavorite.png'))} onPress={handleFavorite} />
           <View style={{width: '100%', alignItems: 'center'}}>
-          <Text style={styles.title}>Serviços</Text>
+            {services.length === 0 && products.length === 0 ? (<Text>Não há produtos cadastrados desse PetShop</Text>) : (<Text></Text>)}
+            {services.length !== 0 ? (<Text style={styles.title}>Serviços</Text>) : (<Text></Text>)}
           <FlatList 
               data={services}
               keyExtractor={services => services.id.toString()}
@@ -143,7 +144,7 @@ export default function Company({ navigation }) {
                 </TouchableOpacity>
               )}
             />
-          <Text style={styles.title}>Produtos</Text>
+          {products.length !== 0 ? (<Text style={styles.title}>Produtos</Text>) : (<Text></Text>)}
           <FlatList 
             data={products}
             keyExtractor={products => products.id.toString()}

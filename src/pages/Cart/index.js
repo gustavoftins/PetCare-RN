@@ -6,7 +6,13 @@ import Title from '../../components/Title/index';
 import AsyncStorage from '@react-native-community/async-storage';
 import styles from './styles';
 
+import Button from '../../components/Button/button';
+
 export default function Cart() {
+  const INITIAL_STATE = {
+    products: [],
+    services: []
+  }
 
   const [cart, setCart] = useState({});
 
@@ -35,8 +41,11 @@ export default function Cart() {
     setCart({ ...cart, services: cart.services.filter(itemFromList => itemFromList !== service) })
   }
 
+  async function removeProductFromCart(product) {
+    setCart({ ...cart, products: cart.products.filter(itemFromList => itemFromList !== product) })
+  }
+
   async function cleanCart() {
-    setCart({});
     await AsyncStorage.removeItem('cartInfos');
   }
 
@@ -59,10 +68,13 @@ export default function Cart() {
         <Text style={styles.cleanCart}>Limpar Carrinho</Text>
       </TouchableOpacity>
       {cart.services === undefined || cart.services === undefined ? (<View style={styles.messageContainer}><Text style={styles.noProduct}>Não há produtos em seu carrinho</Text></View>) : (<Text></Text>)}
-      {cart.services !== undefined ? (<Text style={styles.subTitle}>Serviços</Text>) : (<Text></Text>)}
-      {cart.services !== undefined ? cart.services.map(service => <CartProduct key={service.id} productName={service.name} price={service.price} onPress={() => removeServiceFromCart(service)} />) : console.log('sdjnsdjsd')}
-      {cart.products !== undefined ? (<Text style={styles.subTitle}>Produtos</Text>) : (<Text></Text>)}
-      {cart.products !== undefined ? cart.products.map(product => <CartProduct key={product.id} productName={product.name} price={product.price} />) : console.log('sdjnsdjsd')}
+      {cart.services !== undefined && cart.services.length !== 0 ? (<Text style={styles.subTitle}>Serviços</Text>) : (<Text></Text>)}
+      {cart.services !== undefined && cart.services.length !== 0 ? cart.services.map(service => <CartProduct key={service.id} productName={service.name} price={service.price} onPress={() => removeServiceFromCart(service)} />) : console.log('sdjnsdjsd')}
+      {cart.products !== undefined && cart.products.length !== 0 ? (<Text style={styles.subTitle}>Produtos</Text>) : (<Text></Text>)}
+      {cart.products !== undefined && cart.products.length !== 0 ? cart.products.map(product => <CartProduct key={product.id} productName={product.name} price={product.price} onPress={() => removeProductFromCart(product) } />) : console.log('sdjnsdjsd')}
+      <View style={{alignItems: 'center'}}>
+        {cart.products !== undefined && (cart.products.length !== 0 || cart.services.length !== 0) ? (<Button text="Finalizar Compra" />) : (<Text />)}
+      </View>
     </ScrollView>
   );
 }
