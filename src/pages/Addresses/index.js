@@ -70,11 +70,7 @@ export default function Addresses() {
     })
 
     console.log(address);
-    await api.post('/address/edit', JSON.stringify(address), {
-      headers: {
-        'Authorization': `Bearer ${token}`,
-      }
-    })
+    await api.post('/users/edit', address)
   }
   return (
     <ScrollView style={{ minHeight: '100%' }}>

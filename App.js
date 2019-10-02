@@ -14,8 +14,10 @@ import ServicePage from './src/pages/ServicePage/index';
 import SearchedCompanies from './src/pages/SearchedCompanies/index';
 import Favorites from './src/pages/Favorites/index';
 import ProductPage from './src/pages/ProductPage/index';
+import Nearby from './src/pages/Nearby/index';
 
 import AsyncStorage from '@react-native-community/async-storage';
+
 
 
 import { createStackNavigator, createAppContainer } from 'react-navigation';
@@ -43,7 +45,9 @@ const AppStackNavigator = createStackNavigator({
   ServicePage: ServicePage,
   SearchedCompanies: SearchedCompanies,
   Favorites: Favorites,
-  ProductPage: ProductPage
+  ProductPage: ProductPage,
+  Nearby: Nearby
+
 });
 
 class App extends React.Component {

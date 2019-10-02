@@ -54,7 +54,7 @@ export function Home({ navigation }) {
             <View style={{alignItems: 'center', marginTop: 15}}>
                 <Section title="Melhores Avaliados" imgpath={paths.star} onPress={()=>navigation.navigate('MostRated')}/>
                 <Section title="Pet Shops" imgpath={paths.petshop} onPress={() =>navigation.navigate("PetShops")} />
-                <Section title="Próximos a você" imgpath={paths.location}/>
+                <Section title="Próximos a você" imgpath={paths.location} onPress={() => navigation.navigate('Nearby')} />
                 <Section title="Favoritos" imgpath={paths.favorites} onPress={() => navigation.navigate('Favorites')} />
             </View>
         </ScrollView>
