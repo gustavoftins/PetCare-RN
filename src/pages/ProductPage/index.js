@@ -16,8 +16,10 @@ export default function ProductPage({ navigation }) {
       cnpj: '',
       companyName: '',
       services: [],
-      products: []
+      products: [],
     }
+
+    const [cartToAPI, setCartToAPI ] = useState({})
 
     const [user, setUser] = useState({});
 
@@ -25,11 +27,17 @@ export default function ProductPage({ navigation }) {
 
     const [cart, setCart] = useState(false);
 
-    const [services, setServices] = useState([])
+    const [services, setServices] = useState([]);
+    const [oldProducts, setOldProducts] = useState([])
 
+    const [productsIdsCart, setProductsIdsCart] = useState([]);
+
+    const[servicesIdsCart, setServicesIdsCart] = useState([]);
 
     const product = navigation.getParam('product');
     const company = navigation.getParam('company');
+
+    const address = company.address;
 
     useEffect(() => {
       getCartFromStore();
@@ -44,7 +52,8 @@ export default function ProductPage({ navigation }) {
         setCart(false)
       }else{
         setServices(cartWithInfos.services);
-        setCart(true)
+        setCart(true);
+        setOldProducts(cartWithInfos.products);
       }
 
     }, [cartWithInfos])
@@ -53,8 +62,12 @@ export default function ProductPage({ navigation }) {
       try{
         await AsyncStorage.getItem('cartInfos').then((value) => {
           setCartWithInfos(JSON.parse(value));
-          console.log(JSON.parse(value));
           setServices(JSON.parse(value.services));
+        })
+
+        await AsyncStorage.getItem('cartToAPI').then((value) => {
+          setCartToAPI(JSON.parse(value)); 
+          console.log(JSON.parse(value));
         })
       }catch(err){
 
@@ -75,19 +88,27 @@ export default function ProductPage({ navigation }) {
     async function addProductToCart(){
       if(cart){
         if(cartWithInfos.companyName === company.companyName || cartWithInfos.companyName === ''){
-          await AsyncStorage.setItem('cartInfos', JSON.stringify({ completeName: user.completeName, cpf: user.cpf, address: user.address, phoneNumber: user.phoneNumber, cnpj: company.cnpj, companyName: company.companyName, services: [...services, ], products: cartWithInfos.products.concat(product) }));
+          await AsyncStorage.setItem('cartInfos', JSON.stringify({ completeName: user.completeName, cpf: user.cpf, address: user.address, phoneNumber: user.phoneNumber, cnpj: company.cnpj, companyName: company.companyName, services: [...services, ], products: cartWithInfos.products.concat(product), companyAddress: company.address, email: user.email }));
+          // await AsyncStorage.setItem('cartToAPI', JSON.stringify({ nameCompany: company.companyName, cnpj: company.cnpj, userCompleteName: user.completeName,  companyOrderAddress: address, emailOrderUser: user.email, total:  cartToAPI.total + product.price, subTotal: cartToAPI.total + product.price, payMentMethod: '', servicesIdsCart: servicesIdsCart, productsIdsCart: [...product.id]  }))
+          // console.log({ nameCompany: company.companyName, cnpj: company.cnpj, userCompleteName: user.completeName,  companyOrderAddress: address, emailOrderUser: user.email, total: cartToAPI.total + product.price, subTotal: cartToAPI.total + product.price, payMentMethod: '', servicesIdsCart: [], productsIdsCart: []  })
+          console.log('teste');
         }else{
           console.log('empresa diferente');
         }
       }else{
         setCartWithInfos({ ...cartWithInfos, completeName: user.completeName, cpf: user.cpf, address: user.address, phoneNumber: user.phoneNumber, cnpj: company.cnpj, companyName: company.companyName, services: [ ...services],  });
-        await AsyncStorage.setItem('cartInfos', JSON.stringify({ completeName: user.completeName, cpf: user.cpf, address: user.address, phoneNumber: user.phoneNumber, cnpj: company.cnpj, companyName: company.companyName, services: [...services], products: [product] }));
+        await AsyncStorage.setItem('cartInfos', JSON.stringify({ completeName: user.completeName, cpf: user.cpf, address: user.address, phoneNumber: user.phoneNumber, cnpj: company.cnpj, companyName: company.companyName, services: [...services], products: [product], companyAddress: company.address, email: user.email }));
+        // await AsyncStorage.setItem('cartToAPI', JSON.stringify({ nameCompany: company.companyName, cnpj: company.cnpj, userCompleteName: user.completeName,  companyOrderAddress: address, emailOrderUser: user.email, total:  product.price, subTotal: product.price, payMentMethod: '', servicesIdsCart: servicesIdsCart, productsIdsCart: [...product.id]  }))
       }
     }
 
     useEffect(() => {
       console.log(services);
     }, [services])
+
+    useEffect(() => {
+      console.log(servicesIdsCart);
+    }, [servicesIdsCart])
   return (
     <View style={styles.container}>
         <Text style={styles.productName}>{product.name}</Text>

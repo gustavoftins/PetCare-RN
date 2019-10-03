@@ -8,7 +8,7 @@ export default StyleSheet.create({
     container: {
         alignItems: 'center',
         width: '100%',
-        paddingTop: 30
+        paddingTop: 60
     },
     text: {
         fontSize: 38,

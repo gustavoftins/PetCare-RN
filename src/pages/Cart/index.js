@@ -14,6 +14,8 @@ export default function Cart() {
     services: []
   }
 
+  const [total, setTotal] = useState(0);
+
   const [cart, setCart] = useState({});
 
   useEffect(() => {
@@ -24,6 +26,8 @@ export default function Cart() {
   useEffect(() => {
     console.log(cart);
     reloadCart();
+
+
   }, [cart])
 
   async function getCartFromStorage() {
@@ -31,10 +35,35 @@ export default function Cart() {
       await AsyncStorage.getItem('cartInfos').
         then((cartFromLocal) => {
           setCart(JSON.parse(cartFromLocal));
+
+          let teste = JSON.parse(cartFromLocal);
+          const cartToAPI = {
+            nameCompany: teste.companyName,
+            cnpj: teste.cnpj,
+            userCompleteName: teste.userCompleteName,
+            companyOrderAddress: {
+                street: teste.companyAddress.street,
+                placeNumber: teste.companyAddress.placeNumber,
+                city: teste.companyAddress.city,
+                complement: teste.companyAddress.complement,
+                neighborhood: teste.companyAddress.neighborhood,
+                state: teste.companyAddress.state,
+                cep: teste.companyAddress.cep,
+            },
+            emailOrderUser: teste.email,
+            total: 0,
+            subTotal: 0,
+            paymentMethod: '',
+            servicesIdsCart: [],
+            productsIdsCart: [],
+            
+          }
+          
         })
     } catch (err) {
 
     }
+
   }
 
   async function removeServiceFromCart(service) {

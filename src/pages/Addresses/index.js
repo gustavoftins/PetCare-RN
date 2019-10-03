@@ -45,10 +45,10 @@ export default function Addresses() {
     try {
       await AsyncStorage.getItem('user').then((value) => {
         setUser(JSON.parse(value));
-
         if (JSON.parse(value).address.street) {
           console.log('foi');
-          setMessage('')
+          setMessage('x');
+          setAddress(JSON.parse(value.address));
         } else {
           console.log('não');
           setMessage('Você não tem nenhum endereço, por favor cadastre um');
@@ -70,14 +70,16 @@ export default function Addresses() {
     })
 
     console.log(address);
-    await api.post('/users/edit', address)
+    await api.post('/users/edit', address);
+    setAddress(address);
   }
   return (
     <ScrollView style={{ minHeight: '100%' }}>
       <View style={styles.container}>
         <Text style={styles.title}>Endereços</Text>
-        <AddressBox />
-        <Text>{message}</Text>
+        {message === 'x' ? (<AddressBox street={user.address.street} neighbourhood={user.address.neighborhood} placeNumber={user.address.placeNumber} city={user.address.city} />) : (<Text></Text>)}
+        
+        <Text style={{color: '#ffff'}}>{message}</Text>
         <Text style={{ fontSize: 24, color: '#7bbb5e' }}>Alterar Endereço</Text>
         <NewInput onChangeText={(text) => setAddress({ ...address, address: { ...address.address, street: text } })} placeholder="Rua" />
         <NewInput onChangeText={(text) => setAddress({ ...address, address: { ...address.address, placeNumber: text} })} placeholder="Número" />

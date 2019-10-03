@@ -2,12 +2,12 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import styles from './styles';
 
-export default function AddressBox() {
+export default function AddressBox({ street, neighbourhood, city, placeNumber , state}) {
   return (
     <View style={styles.box}>
-        <Text style={styles.street}>Rua 30 de Outubro - 505</Text>
-        <Text style={styles.neighbourhood}>Itoupava Norte</Text>
-        <Text style={styles.city}>Blumenau - SC</Text>
+        <Text style={styles.street}>{street} - {placeNumber}</Text>
+        <Text style={styles.neighbourhood}>{neighbourhood}</Text>
+        <Text style={styles.city}>{city}</Text>
     </View>
   );
 }

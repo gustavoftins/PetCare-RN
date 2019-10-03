@@ -8,14 +8,19 @@ export default function PetShops({ navigation }) {
 
     const [companies, setCompanies] = useState([]);
 
+    const [actPage, setActPage] = useState(0);
+
+    const [totalPages, setTotalPages] = useState(0);
+
     useEffect(() => {
-         loadCompanies(0);
+         loadCompanies(actPage);
     },[])
 
     async function loadCompanies(page) {
         await api.get(`/companies/${page}`).then(response => {
             console.log(response.data.content);
             setCompanies(companies.concat(response.data.content));
+            setTotalPages(response.data.totalPages);
         });
     }
 
@@ -25,15 +30,26 @@ export default function PetShops({ navigation }) {
             status={item.status}
             description={item.description}
             onPress={() => navigation.navigate('Company', {companyId: item.id})}
+
         />
     )
+
+    loadMore = () => {
+        if(actPage === totalPages) return
+
+        const pageNumber = actPage + 1;
+
+        loadCompanies(pageNumber)
+    }
 
   return (
     <View>
         <FlatList 
             data={companies}
-            keyExtractor={companies => companies.id.toString()}
+            keyExtractor={companies => companies.id}
             renderItem={renderItem}
+            onEndReached={loadMore}
+            onEndReachedThreshold={0.1}
         />
     </View>
   );
