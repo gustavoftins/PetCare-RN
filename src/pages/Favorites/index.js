@@ -44,8 +44,7 @@ export default function Favorites({ navigation }) {
                 keyExtractor={item => item.id.toString()}
                 renderItem={renderItem}
             />)}
-            
-            
+
         </ScrollView>
     );
 }

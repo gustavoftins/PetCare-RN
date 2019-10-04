@@ -8,6 +8,8 @@ import api from '../../services/api';
 import AsyncStorage from '@react-native-community/async-storage';
 import { NavigationActions } from 'react-navigation';
 
+import Loading from '../../components/Loading';
+
 import ErrorMessage from '../../components/ErrorCard/index';
 
 export default function Signin({ navigation }) {
@@ -19,7 +21,8 @@ export default function Signin({ navigation }) {
 
     const [user, setUser] = useState(INITIAL_STATE);
     const [error, setError] = useState('');
-    const [errorCard, setErrorCard] = useState(false)
+    const [errorCard, setErrorCard] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         //if(isAuthenticated()) {
@@ -28,6 +31,7 @@ export default function Signin({ navigation }) {
     },[])
 
     async function handleLogin() {
+        setIsLoading(true);
 
        const { email, password } = user;
 
@@ -54,6 +58,7 @@ export default function Signin({ navigation }) {
            console.log(response.data);
            console.log(accessToken);
            AsyncStorage.setItem('jwtToken', accessToken);
+           setIsLoading(false);
            navigation.navigate("Home");
            
            
@@ -80,13 +85,18 @@ export default function Signin({ navigation }) {
                 source={require('../../assets/dog.png')}
             />
             { errorCard ? (<ErrorMessage message={error} /> ) : (<View/>)}
-            
-            <NewInput placeholder="E-mail" onChangeText={(text) => setUser({ ...user, email: text})}/>
+            {isLoading ? (<Loading />) : (
+                <>
+                 <NewInput placeholder="E-mail" onChangeText={(text) => setUser({ ...user, email: text})}/>
             <NewInput placeholder="Senha" onChangeText={(text) => setUser({ ...user, password: text})}
             secureTextEntry={true} />
             <NewButton text="Entrar"
                 onPress={handleLogin}
             />
+            </>
+            )}
+            
+           
         </View>
     );
 }

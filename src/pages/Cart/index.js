@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, ScrollView, TouchableOpacity, Text, FlatList, Modal, StyleSheet } from 'react-native';
+import { View, ScrollView, TouchableOpacity, Text, FlatList, Modal, StyleSheet, StatusBar } from 'react-native';
 import CartProduct from '../../components/CartProducts/index';
 import Title from '../../components/Title/index';
 
@@ -8,7 +8,8 @@ import styles from './styles';
 
 import Button from '../../components/Button/button';
 
-import api from '../../services/api'
+import api from '../../services/api';
+
 
 export default function Cart({ navigation }) {
 
@@ -174,29 +175,29 @@ export default function Cart({ navigation }) {
 
   return (
     <ScrollView style={{ alignContent: 'center'}}>
+      <StatusBar backgroundColor='white' />
       <Text style={styles.pageTitle}>Carrinho</Text>
-
-        <Modal visible={modalVisible} transparent={true}>
+        <Modal visible={modalVisible} style={modalStyles.modal} transparent={true}>
         <View style={modalStyles.modalContainer}>
           <Text style={modalStyles.modalTitle}>Método de pagamento</Text>
-          <Text>Total: R${total}</Text>
+          <Text style={modalStyles.total}>Total: R${total}</Text>
           <View style={modalStyles.paymentMethodContainer}>
-            <TouchableOpacity onPress={() => setRealCart({ ...realCart, paymentMethod: 'MONEY'})}>
+            <TouchableOpacity style={modalStyles.paymenMethodBtn} onPress={() => setRealCart({ ...realCart, paymentMethod: 'MONEY'})}>
               <Text>Dinheiro</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => setRealCart({ ...realCart, paymentMethod: 'DEBIT_CARD'})}> 
+            <TouchableOpacity style={modalStyles.paymenMethodBtn} onPress={() => setRealCart({ ...realCart, paymentMethod: 'DEBIT_CARD'})}> 
               <Text>Cartão de Débito</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => setRealCart({...realCart, paymentMethod: 'CREDIT_CARD'})}>
+            <TouchableOpacity style={modalStyles.paymenMethodBtn} onPress={() => setRealCart({...realCart, paymentMethod: 'CREDIT_CARD'})}>
               <Text>Cartão de Crédito</Text>
             </TouchableOpacity>
           </View>
           <View style={modalStyles.paymentMethodContainer}>
           <TouchableOpacity onPress={() => setModalVisible(false)}>
-            <Text>Fechar</Text>
+            <Text style={modalStyles.closeModal}>Fechar</Text>
           </TouchableOpacity>
           <TouchableOpacity>
-            <Text onPress={handleFinish}>Finalizar Compra</Text>
+            <Text style={modalStyles.finish} onPress={handleFinish}>Finalizar Compra</Text>
           </TouchableOpacity>
           </View>
         </View>
@@ -217,18 +218,44 @@ export default function Cart({ navigation }) {
 
 const modalStyles = StyleSheet.create({
   modalContainer: {
-    height: 150, 
+    height: 250, 
     backgroundColor: '#f2f2f2',
     alignItems: 'center'
   },
   modalTitle: {
-    fontSize: 18,
-    color: '#7bbb5e'
+    fontSize: 20,
+    color: '#7bbb5e',
+    margin: 10
   },
   closeModal: {
-
+    color: 'red',
+    fontSize: 16,
+    fontWeight: 'bold',
+    margin: 5
   },
   paymentMethodContainer: {
     flexDirection: 'row'
+  }, 
+  total: {
+    fontWeight: 'bold',
+    margin: 10
+  },
+  paymenMethodBtn: {
+    backgroundColor: 'white',
+    borderColor: '#7bbb5e',
+    borderWidth: 1.5,
+    margin: 10,
+    padding: 10,
+    borderRadius: 10
+  },
+  modal: {
+    padding: 30
+  },
+  finish: {
+    color: '#7bbb5e',
+    fontSize: 16,
+    fontWeight: 'bold',
+    margin: 5
+
   }
 })

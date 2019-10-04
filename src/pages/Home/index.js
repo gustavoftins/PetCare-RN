@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, StatusBar } from 'react-native';
+import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, StatusBar, Modal } from 'react-native';
 
 import { createBottomTabNavigator, createAppContainer } from 'react-navigation';
 
@@ -16,6 +16,8 @@ import api from '../../services/api';
 import AsyncStorage from '@react-native-community/async-storage';
 
 
+import Loading from '../../components/Loading/index';
+
 export function navigationOptions({ navigation }) {
     return {
         header: null
@@ -30,18 +32,22 @@ export function Home({ navigation }) {
     const [actPage, setActPage] = useState(0);
     const [searchText, setSearchText] = useState('');
     const [user, setUser] = useState({});
+    const [isLoading, setIsLoading] = useState(false);
+
 
     useEffect(() => {
         getUser();
     }, [])
 
     async function searchByCompanyName(page, text) {
+        setIsLoading(true);
         console.log(searchText);
         if(searchText.length !== '') {
             await api.get(`/companies-searched/${page}/${text}`).then(res => {
                 setTotalPages(res.data.totalPages);
                 setActPage(res.data.number);
                 setSearchedCompanies(res.data.content);
+                setIsLoading(false);
             })
         }   
     }
@@ -61,15 +67,21 @@ export function Home({ navigation }) {
     },[searchedCompanies])
     return (
         <ScrollView style={{height: '100%'}}>
-            <HomeHeader />
+            
             <StatusBar backgroundColor="#7bbb5e"/>
-            <SearchBar onPress={() => searchByCompanyName(0, searchText)} onChangeText={(text) => setSearchText(text)} />
+            {isLoading ? (<Modal visible={isLoading} transparent={true}><Loading /><StatusBar backgroundColor="white"/></Modal>) : (
+                <>
+                <HomeHeader />
+                <SearchBar onPress={() => searchByCompanyName(0, searchText)} onChangeText={(text) => setSearchText(text)} />
             <View style={{alignItems: 'center', marginTop: 15}}>
                 <Section title="Melhores Avaliados" imgpath={paths.star} onPress={()=>navigation.navigate('MostRated')}/>
                 <Section title="Pet Shops" imgpath={paths.petshop} onPress={() =>navigation.navigate("PetShops")} />
                 <Section title="Próximos a você" imgpath={paths.location} onPress={() => navigation.navigate('Nearby')} />
                 <Section title="Favoritos" imgpath={paths.favorites} onPress={() => navigation.navigate('Favorites')} />
             </View>
+                </>
+            )}
+            
         </ScrollView>
     );
 }

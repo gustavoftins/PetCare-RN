@@ -36,6 +36,7 @@ export default function Opening({ navigation }) {
     }, [token])
     return (
         <ScrollView>
+            {}
             <View style={styles.container}>
                 <StatusBar backgroundColor="white" barStyle="dark-content"/>
                 <Image source={require('../../assets/paw.png')} style={styles.img}/>
