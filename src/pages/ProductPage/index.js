@@ -77,7 +77,7 @@ export default function ProductPage({ navigation }) {
     async function getUserFromStore(){
       try{
         await AsyncStorage.getItem('user').then((value) => {
-          setUser(JSON.parse(user));
+          setUser(JSON.parse(value));
           console.log(user);
         })
       }catch(err){
@@ -87,8 +87,8 @@ export default function ProductPage({ navigation }) {
 
     async function addProductToCart(){
       if(cart){
-        if(cartWithInfos.companyName === company.companyName || cartWithInfos.companyName === ''){
-          await AsyncStorage.setItem('cartInfos', JSON.stringify({ completeName: user.completeName, cpf: user.cpf, address: user.address, phoneNumber: user.phoneNumber, cnpj: company.cnpj, companyName: company.companyName, services: [...services, ], products: cartWithInfos.products.concat(product), companyAddress: company.address, email: user.email }));
+        if(cartWithInfos.companyName.includes(company.companyName) || cartWithInfos.companyName === ''){
+          await AsyncStorage.setItem('cartInfos', JSON.stringify({ completeName: user.completeName, cpf: user.cpf, address: user.address, phoneNumber: user.phoneNumber, cnpj: company.cnpj, companyName: company.companyName, services: [...services, ], products: cartWithInfos.products.concat(product), companyAddress: company.address, email: user.email, userCompleteName: user.completeName }));
           // await AsyncStorage.setItem('cartToAPI', JSON.stringify({ nameCompany: company.companyName, cnpj: company.cnpj, userCompleteName: user.completeName,  companyOrderAddress: address, emailOrderUser: user.email, total:  cartToAPI.total + product.price, subTotal: cartToAPI.total + product.price, payMentMethod: '', servicesIdsCart: servicesIdsCart, productsIdsCart: [...product.id]  }))
           // console.log({ nameCompany: company.companyName, cnpj: company.cnpj, userCompleteName: user.completeName,  companyOrderAddress: address, emailOrderUser: user.email, total: cartToAPI.total + product.price, subTotal: cartToAPI.total + product.price, payMentMethod: '', servicesIdsCart: [], productsIdsCart: []  })
           console.log('teste');
@@ -97,7 +97,7 @@ export default function ProductPage({ navigation }) {
         }
       }else{
         setCartWithInfos({ ...cartWithInfos, completeName: user.completeName, cpf: user.cpf, address: user.address, phoneNumber: user.phoneNumber, cnpj: company.cnpj, companyName: company.companyName, services: [ ...services],  });
-        await AsyncStorage.setItem('cartInfos', JSON.stringify({ completeName: user.completeName, cpf: user.cpf, address: user.address, phoneNumber: user.phoneNumber, cnpj: company.cnpj, companyName: company.companyName, services: [...services], products: [product], companyAddress: company.address, email: user.email }));
+        await AsyncStorage.setItem('cartInfos', JSON.stringify({ completeName: user.completeName, cpf: user.cpf, address: user.address, phoneNumber: user.phoneNumber, cnpj: company.cnpj, companyName: company.companyName, services: [...services], products: [product], companyAddress: company.address, email: user.email, userCompleteName: user.completeName }));
         // await AsyncStorage.setItem('cartToAPI', JSON.stringify({ nameCompany: company.companyName, cnpj: company.cnpj, userCompleteName: user.completeName,  companyOrderAddress: address, emailOrderUser: user.email, total:  product.price, subTotal: product.price, payMentMethod: '', servicesIdsCart: servicesIdsCart, productsIdsCart: [...product.id]  }))
       }
     }

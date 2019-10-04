@@ -67,13 +67,13 @@ export default function ServicePage({ navigation }) {
   async function addServiceToCart(){
     if(cart){
       if(cartWithInfos.companyName === company.companyName || cartWithInfos.companyName === ''){
-        await AsyncStorage.setItem('cartInfos', JSON.stringify({ completeName: user.completeName, cpf: user.cpf, address: user.address, phoneNumber: user.phoneNumber, cnpj: company.cnpj, companyName: company.companyName, services: cartWithInfos.services.concat(service), products: [...products, ] }));
+        await AsyncStorage.setItem('cartInfos', JSON.stringify({ completeName: user.completeName, cpf: user.cpf, address: user.address, phoneNumber: user.phoneNumber, cnpj: company.cnpj, companyName: company.companyName, services: cartWithInfos.services.concat(service), products: [...products, ], companyAddress: company.address, email: user.email, userCompleteName: user.completeName }));
       }else{
         console.log('empresa diferente');
       }
     }else{
       setCartWithInfos({ ...cartWithInfos, completeName: user.completeName, cpf: user.cpf, address: user.address, phoneNumber: user.phoneNumber, cnpj: company.cnpj, companyName: company.companyName, services: [ ...services, service ]  });
-      await AsyncStorage.setItem('cartInfos', JSON.stringify({ completeName: user.completeName, cpf: user.cpf, address: user.address, phoneNumber: user.phoneNumber, cnpj: company.cnpj, companyName: company.companyName, services: [service], products: [...products, ] }));
+      await AsyncStorage.setItem('cartInfos', JSON.stringify({ completeName: user.completeName, cpf: user.cpf, address: user.address, phoneNumber: user.phoneNumber, cnpj: company.cnpj, companyName: company.companyName, services: [service], products: [...products, ], companyAddress: company.address, email: user.email, userCompleteName: user.completeName }));
     }
   }
 
