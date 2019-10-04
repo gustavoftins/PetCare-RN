@@ -37,14 +37,15 @@ export default function Favorites({ navigation }) {
 
     return (
         <ScrollView style={{ width: '100%', height: '100%' }}>
-            <View style={{alignItems: 'center', padding: 30}}>
+            {favoriteCompanies !== undefined && favoriteCompanies.length === 0 ? (<View style={{alignItems: 'center', padding: 30}}>
                 <Text style={{fontSize: 16, fontWeight: 'bold'}}>{message}</Text>
-            </View>
-            <FlatList
+            </View>) : (<FlatList
                 data={favoriteCompanies}
                 keyExtractor={item => item.id.toString()}
                 renderItem={renderItem}
-            />
+            />)}
+            
+            
         </ScrollView>
     );
 }

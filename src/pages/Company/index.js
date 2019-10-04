@@ -10,6 +10,8 @@ import Service from '../../components/ServiceCard/index';
 import api from '../../services/api';
 import AsyncStorage from '@react-native-community/async-storage';
 
+import Loading from '../../components/Loading';
+
 import { TOKEN_KEY } from '../../services/auth';
 
 export default function Company({ navigation }) {
@@ -17,8 +19,10 @@ export default function Company({ navigation }) {
   const [company, setCompany] = useState({});
 
   const [products, setProducts] = useState([]);
+  const [isLoadingProducts, setIsLoadingProducts] = useState(false);
 
   const [services, setServices] = useState([]);
+  const [isLoadingServices, setIsLoadingServices] = useState(false);
 
   const [user, setUser] = useState({});
 
@@ -35,14 +39,20 @@ export default function Company({ navigation }) {
   }
 
   async function getProducts(id, page){
+    setIsLoadingProducts(true);
     await api.get(`/company-products/${id}/${page}`).then(res => {
       setProducts(products.concat(res.data.content));
+
+      setIsLoadingProducts(false);
     })
   }
 
   async function getServices(id, page){
+    setIsLoadingServices(true);
     await api.get(`/company-services/${id}/${page}`).then(res => {
       setServices(services.concat(res.data.content));
+
+      setIsLoadingServices(false);
     })
   }
 
@@ -81,8 +91,15 @@ export default function Company({ navigation }) {
 
   },[])
 
+  async function reloadUser(){
+    await api.get('/users/profile-user').then((res) => {
+      setUser(res.data);
+      AsyncStorage.setItem('user', JSON.stringify(res.data));
+  })
+  }
+
   useEffect(() => {
-    refreshFavorite()
+    reloadUser();
   }, [isFavorite])
 
   renderServices = ({ item }) => (
@@ -128,7 +145,10 @@ export default function Company({ navigation }) {
           <View style={{width: '100%', alignItems: 'center'}}>
             {services.length === 0 && products.length === 0 ? (<Text>Não há produtos cadastrados desse PetShop</Text>) : (<Text></Text>)}
             {services.length !== 0 ? (<Text style={styles.title}>Serviços</Text>) : (<Text></Text>)}
-          <FlatList 
+
+            {isLoadingServices ? (<Loading />) : (
+              <>
+                 <FlatList 
               data={services}
               keyExtractor={services => services.id.toString()}
               renderItem={({ item }) => (
@@ -144,8 +164,14 @@ export default function Company({ navigation }) {
                 </TouchableOpacity>
               )}
             />
+              </>
+            )}
+         
           {products.length !== 0 ? (<Text style={styles.title}>Produtos</Text>) : (<Text></Text>)}
-          <FlatList 
+
+          {isLoadingProducts ? (<Loading />) : (
+            <>
+             <FlatList 
             data={products}
             keyExtractor={products => products.id.toString()}
             renderItem={({ item }) => (
@@ -158,6 +184,8 @@ export default function Company({ navigation }) {
               </TouchableOpacity>
             )}
           />
+            </>
+          )}
           </View>
         </View>
     </ScrollView>

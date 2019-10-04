@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { View, FlatList } from 'react-native';
+import { View, FlatList, Image } from 'react-native';
 import CompanyCard from '../../components/Cards/Company/index';
 
 import api from '../../services/api';
+import Loading from '../../components/Loading';
 
 export default function PetShops({ navigation }) {
 
@@ -11,16 +12,19 @@ export default function PetShops({ navigation }) {
     const [actPage, setActPage] = useState(0);
 
     const [totalPages, setTotalPages] = useState(0);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
          loadCompanies(actPage);
     },[])
 
     async function loadCompanies(page) {
+        setIsLoading(true)
         await api.get(`/companies/${page}`).then(response => {
             console.log(response.data.content);
             setCompanies(companies.concat(response.data.content));
             setTotalPages(response.data.totalPages);
+            setIsLoading(false);
         });
     }
 
@@ -44,13 +48,18 @@ export default function PetShops({ navigation }) {
 
   return (
     <View>
-        <FlatList 
+        {isLoading ? (<Loading />) : (
+            <>
+            <FlatList 
             data={companies}
             keyExtractor={companies => companies.id}
             renderItem={renderItem}
             onEndReached={loadMore}
             onEndReachedThreshold={0.1}
         />
+        </>
+        )}
+        
     </View>
   );
 }

@@ -119,6 +119,7 @@ export default function ProductPage({ navigation }) {
         <Text style={styles.features}>Transgênico: {product.transgenic}</Text>
         <Text style={styles.price}>R${product.price}</Text>
         <Button text="Adicionar ao carrinho" onPress={addProductToCart} />
+        <Button text="Ir para o carrinho" onPress={() => navigation.navigate('Cart')} />
     </View>
   );
 }

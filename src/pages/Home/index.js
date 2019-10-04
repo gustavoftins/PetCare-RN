@@ -13,6 +13,7 @@ import NewButton from '../../components/Button/button';
 import SearchBar from '../../components/SearchBar/index';
 import { isAuthenticated } from '../../services/auth';
 import api from '../../services/api';
+import AsyncStorage from '@react-native-community/async-storage';
 
 
 export function navigationOptions({ navigation }) {
@@ -28,6 +29,11 @@ export function Home({ navigation }) {
     const [totalPages, setTotalPages] = useState(0);
     const [actPage, setActPage] = useState(0);
     const [searchText, setSearchText] = useState('');
+    const [user, setUser] = useState({});
+
+    useEffect(() => {
+        getUser();
+    }, [])
 
     async function searchByCompanyName(page, text) {
         console.log(searchText);
@@ -38,6 +44,13 @@ export function Home({ navigation }) {
                 setSearchedCompanies(res.data.content);
             })
         }   
+    }
+
+    async function getUser(){
+        await api.get('/users/profile-user').then((res) => {
+            setUser(res.data);
+            AsyncStorage.setItem('user', JSON.stringify(res.data));
+        })
     }
 
     useEffect(() => {

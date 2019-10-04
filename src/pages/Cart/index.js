@@ -10,16 +10,49 @@ import Button from '../../components/Button/button';
 
 import api from '../../services/api'
 
-export default function Cart() {
+export default function Cart({ navigation }) {
+
+  const CART_INITIAL_STATE = {
+    address: {
+      id: '',
+      placeNumber: '',
+      complement: '',
+      street: '',
+      neighborhood: '',
+      cep: '',
+      city: '',
+      state: ''
+    },
+    companyAddress: {
+      cep: '',
+      city: '',
+      complement: '',
+      id: '',
+      neighborhood: '',
+      placeNumber: '',
+      state: '',
+      street: ''
+    },
+    cnpj: '',
+    companyName: '',
+    completeName: '',
+    cpf: '',
+    email: '',
+    phoneNumber: '',
+    products: [],
+    services: []
+  }
 
   const [total, setTotal] = useState(0);
   const [subTotal, setSubTotal] = useState(0);
-  const [cart, setCart] = useState({});
+  const [cart, setCart] = useState(CART_INITIAL_STATE);
   const [servicesIdsCart, setServicesIdsCart] = useState([])
   const [productsIdsCart, setProductsIdsCart] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState('');
   const [realCart, setRealCart] = useState({});
+
+
 
   useEffect(() => {
     getCartFromStorage();
@@ -62,16 +95,16 @@ export default function Cart() {
             
           }
 
-
+          if(teste.services.length !== null || teste.services.length !== undefined || teste.services.length > 0){
           for(let i = 0; i < teste.services.length; i++){
             cartToAPI.total += teste.services[i].price;
             setTotal(cartToAPI.total);
             cartToAPI.subTotal = cartToAPI.total;
             setServicesIdsCart(servicesIdsCart.concat(teste.services[i].id));
             cartToAPI.servicesIdsCart = servicesIdsCart.concat(teste.services[i].id);
-            
           }
-
+        }
+          if(teste.products.length !== null || teste.product.length !== undefined || teste.products.length > 0){
           for(let i = 0; i < teste.products.length; i++){
             cartToAPI.total += teste.products[i].price;
             setTotal(cartToAPI.total)
@@ -79,7 +112,7 @@ export default function Cart() {
             setProductsIdsCart(productsIdsCart.concat(teste.products[i].id));
             cartToAPI.productsIdsCart = productsIdsCart.concat(teste.products[i].id);
           }
-
+        }
           console.log(cartToAPI);
 
           setRealCart(cartToAPI);
@@ -99,14 +132,28 @@ export default function Cart() {
   }, [subTotal])
   async function removeServiceFromCart(service) {
     setCart({ ...cart, services: cart.services.filter(itemFromList => itemFromList !== service) })
+    setRealCart({...realCart, servicesIdsCart: realCart.servicesIdsCart.filter(serviceId => serviceId !== service.id)});
+
+    if(cart.services.length === 0 && cart.products.length === 0){
+      setCart(CART_INITIAL_STATE);
+      setRealCart(CART_INITIAL_STATE);
+    }
   }
 
   async function removeProductFromCart(product) {
     setCart({ ...cart, products: cart.products.filter(itemFromList => itemFromList !== product) })
+    setRealCart({...realCart, productsIdsCart: realCart.productsIdsCart.filter(productId => productId !== product.id) })
+
+    if(cart.services.length === 0 && cart.products.length === 0){
+      setCart(CART_INITIAL_STATE);
+      setRealCart(CART_INITIAL_STATE);
+    }
+
   }
 
-  async function cleanCart() {
-    await AsyncStorage.removeItem('cartInfos');
+  function cleanCart() {
+    setCart(CART_INITIAL_STATE);
+    setRealCart(CART_INITIAL_STATE);
   }
 
   async function reloadCart() {
@@ -114,15 +161,21 @@ export default function Cart() {
   }
 
   async function handleFinish(){
-    await api.post(`/finishing-order`, JSON.stringify(realCart));
+    try{
+      await api.post(`/finishing-order`, JSON.stringify(realCart));
+      setRealCart(CART_INITIAL_STATE);
+      setCart(CART_INITIAL_STATE);
+      setModalVisible(false);
+      navigation.navigate('Home');
+    }catch(err){
+
+    }
   }
 
   return (
     <ScrollView style={{ alignContent: 'center'}}>
       <Text style={styles.pageTitle}>Carrinho</Text>
-      <TouchableOpacity style={styles.btn} onPress={cleanCart}>
-        <Text style={styles.cleanCart}>Limpar Carrinho</Text>
-      </TouchableOpacity>
+
         <Modal visible={modalVisible} transparent={true}>
         <View style={modalStyles.modalContainer}>
           <Text style={modalStyles.modalTitle}>Método de pagamento</Text>
@@ -131,10 +184,10 @@ export default function Cart() {
             <TouchableOpacity onPress={() => setRealCart({ ...realCart, paymentMethod: 'MONEY'})}>
               <Text>Dinheiro</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => setPaymentMethod('DEBIT_CARD')}> 
+            <TouchableOpacity onPress={() => setRealCart({ ...realCart, paymentMethod: 'DEBIT_CARD'})}> 
               <Text>Cartão de Débito</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => setPaymentMethod('CREDIT_CARD')}>
+            <TouchableOpacity onPress={() => setRealCart({...realCart, paymentMethod: 'CREDIT_CARD'})}>
               <Text>Cartão de Crédito</Text>
             </TouchableOpacity>
           </View>
@@ -148,7 +201,7 @@ export default function Cart() {
           </View>
         </View>
         </Modal>
-      {cart.services === undefined || cart.services === undefined ? (<View style={styles.messageContainer}><Text style={styles.noProduct}>Não há produtos em seu carrinho</Text></View>) : (<Text></Text>)}
+      {cart.services.length === 0 && cart.products.length === 0 ? (<View style={styles.messageContainer}><Text style={styles.noProduct}>Não há produtos em seu carrinho</Text></View>) : (<TouchableOpacity onPress={cleanCart}><Text style={styles.cleanCart}>Limpar Carrinho</Text></TouchableOpacity>)}
       {cart.services !== undefined && cart.services.length !== 0 ? (<Text style={styles.subTitle}>Serviços</Text>) : (<Text></Text>)}
       {cart.services !== undefined && cart.services.length !== 0 ? cart.services.map(service =>  (<CartProduct key={service.id} productName={service.name} price={service.price} onPress={() => removeServiceFromCart(service)} />)) : console.log('sdjnsdjsd')}
       {cart.products !== undefined && cart.products.length !== 0 ? (<Text style={styles.subTitle}>Produtos</Text>) : (<Text></Text>)}

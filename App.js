@@ -15,6 +15,8 @@ import SearchedCompanies from './src/pages/SearchedCompanies/index';
 import Favorites from './src/pages/Favorites/index';
 import ProductPage from './src/pages/ProductPage/index';
 import Nearby from './src/pages/Nearby/index';
+import Cart from './src/pages/Cart/index';
+
 
 import AsyncStorage from '@react-native-community/async-storage';
 
@@ -46,7 +48,8 @@ const AppStackNavigator = createStackNavigator({
   SearchedCompanies: SearchedCompanies,
   Favorites: Favorites,
   ProductPage: ProductPage,
-  Nearby: Nearby
+  Nearby: Nearby,
+  Cart: Cart
 
 });
 
