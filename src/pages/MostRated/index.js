@@ -7,10 +7,17 @@ import api from '../../services/api';
 
 import Loading from '../../components/Loading';
 
+import Button from '../../components/Button/SecondaryButton/index';
+
 export default function MostRated({ navigation }) {
 
   const [companies, setCompanies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+
+  const [actPage, setActPage] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
+
+  const [isThereMorePages, setIsThereMorePages] = useState(false);
 
   useEffect(() => {
     handleMostRateds(0)
@@ -19,9 +26,31 @@ export default function MostRated({ navigation }) {
     setIsLoading(true);
     await api.get(`/companies-most-rated/${page}`).then(res => {
       setCompanies(res.data.content);
-
+      setActPage(res.data.number);
+      setTotalPages(res.data.totalPages);
       setIsLoading(false);
+
+      if(res.data.totalPages <= 1){
+        setIsThereMorePages(false);
+      }else{
+        setIsThereMorePages(true);
+      }
     })
+  }
+
+  async function loadMoreCompanies(page){
+    await api.get(`/companies-most-rated/${page}`).then(res => {
+      setCompanies(companies.concat(res.data.content));
+      setTotalPages(res.data.totalPages);
+      setActPage(res.data.number);
+
+
+      if(res.data.number === res.data.totalPages){
+          setIsThereMorePages(false);
+      }else{
+          setIsThereMorePages(true);
+      }
+  }) 
   }
 
   useEffect(() =>{
@@ -47,6 +76,7 @@ export default function MostRated({ navigation }) {
         keyExtractor={item => item.id.toString()}
         renderItem={renderItem}
       />
+      {isThereMorePages ? (<View style={{width: '100%', alignItems: 'center'}}><Button text={'Carregar Mais'} onPress={() => loadMoreCompanies(actPage + 1)} /></View>) : (<View></View>)}
         </>
       )}
       

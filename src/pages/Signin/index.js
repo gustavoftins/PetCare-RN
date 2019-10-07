@@ -20,15 +20,16 @@ export default function Signin({ navigation }) {
     }
 
     const [user, setUser] = useState(INITIAL_STATE);
-    const [error, setError] = useState('');
+    const [error, setError] = useState('x');
     const [errorCard, setErrorCard] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
-    useEffect(() => {
-        //if(isAuthenticated()) {
-        //    navigation.navigate('Home');
-        //}
-    },[])
+
+    useEffect(() =>{
+        if(error !== '' && error !== 'x'){
+            setErrorCard(true);
+        }
+    }, [error])
 
     async function handleLogin() {
         setIsLoading(true);
@@ -38,11 +39,13 @@ export default function Signin({ navigation }) {
        if(email == '' || password == ''){
            setError("Preencha todos os campos");
            setErrorCard(true);
+           setIsLoading(false);
            return;
        }else{
           if(!(user.email.includes('@') && user.email.includes('.com'))){
               setError("E-mail não válido");
               setErrorCard(true);
+              setIsLoading(false);
               return;
           }
        }
@@ -50,19 +53,19 @@ export default function Signin({ navigation }) {
        if(password.length > 100) {
            setError("Senha não válida");
            setErrorCard(true);
+           setIsLoading(false);
            return;
        }
 
        await api.post("/auth/login", JSON.stringify(user)).then(response => {
            const { accessToken } = response.data;
-           console.log(response.data);
-           console.log(accessToken);
            AsyncStorage.setItem('jwtToken', accessToken);
            setIsLoading(false);
            navigation.navigate("Home");
            
            
        }).catch(error => {
+        setIsLoading(false); 
            switch(error.message){
                case "Network Error":
                    return setError("O servidor está temporariamente desligado")
@@ -73,7 +76,8 @@ export default function Signin({ navigation }) {
                     return setError("Email ou senha incorretos.");
                 default:
                     return setError("");
-           } 
+           }
+           
        })
 
 

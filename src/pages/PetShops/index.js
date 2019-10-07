@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { View, FlatList, Image } from 'react-native';
+import { View, FlatList, Image, ScrollView, Text } from 'react-native';
 import CompanyCard from '../../components/Cards/Company/index';
 
 import api from '../../services/api';
 import Loading from '../../components/Loading';
+
+import Button from '../../components/Button/SecondaryButton/index';
+console.disableYellowBox = true;
 
 export default function PetShops({ navigation }) {
 
@@ -13,6 +16,8 @@ export default function PetShops({ navigation }) {
 
     const [totalPages, setTotalPages] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
+
+    const [isThereMorePages, setIsThereMorePages] = useState(false);
 
     useEffect(() => {
          loadCompanies(actPage);
@@ -24,8 +29,30 @@ export default function PetShops({ navigation }) {
             console.log(response.data.content);
             setCompanies(companies.concat(response.data.content));
             setTotalPages(response.data.totalPages);
+            setActPage(response.data.number);
             setIsLoading(false);
+
+            if(response.data.totalPages <= 1){
+                setIsThereMorePages(false);
+            }else{
+                setIsThereMorePages(true);
+            }
         });
+    }
+
+    async function loadMoreCompanies(page){
+        await api.get(`/companies/${page}`).then(res => {
+            setCompanies(companies.concat(res.data.content));
+            setTotalPages(res.data.totalPages);
+            setActPage(res.data.number);
+
+
+            if(res.data.number === res.data.totalPages){
+                setIsThereMorePages(false);
+            }else{
+                setIsThereMorePages(true);
+            }
+        }) 
     }
 
     renderItem = ({ item }) => (
@@ -38,28 +65,22 @@ export default function PetShops({ navigation }) {
         />
     )
 
-    loadMore = () => {
-        if(actPage === totalPages) return
-
-        const pageNumber = actPage + 1;
-
-        loadCompanies(pageNumber)
-    }
-
   return (
-    <View>
+    <ScrollView>
         {isLoading ? (<Loading />) : (
             <>
             <FlatList 
             data={companies}
-            keyExtractor={companies => companies.id}
+            keyExtractor={companies => companies.id.toString()}
             renderItem={renderItem}
-            onEndReached={loadMore}
-            onEndReachedThreshold={0.1}
         />
+        <View style={{width: '100%', alignItems: 'center', margin: 10}}>
+            {isThereMorePages ? (<Button text="Carregar mais" onPress={() => loadMoreCompanies(actPage + 1)} />) : (<Text></Text>)}
+        </View>
         </>
-        )}
         
-    </View>
+        )}
+
+    </ScrollView>
   );
 }
