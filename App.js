@@ -16,6 +16,7 @@ import Favorites from './src/pages/Favorites/index';
 import ProductPage from './src/pages/ProductPage/index';
 import Nearby from './src/pages/Nearby/index';
 import Cart from './src/pages/Cart/index';
+import Orders from './src/pages/Orders/index';
 
 
 import AsyncStorage from '@react-native-community/async-storage';
@@ -49,7 +50,8 @@ const AppStackNavigator = createStackNavigator({
   Favorites: Favorites,
   ProductPage: ProductPage,
   Nearby: Nearby,
-  Cart: Cart
+  Cart: Cart,
+  Orders: Orders
 
 });
 
@@ -60,21 +62,6 @@ class App extends React.Component {
     );
   }
 }
-axios.interceptors.request.use(async (config) => {
-  if (
-    !config.url.endsWith('login') ||
-    !config.url.endsWith('signup')
-  ) {
-    AsyncStorage.getItem(TOKEN_KEY).then(res => {
-      config.headers.Authorization = `Bearer ${res}`;
-    });
-  }
-
-  return config;
-}, (error) => {
-  // I cand handle a request with errors here
-  return Promise.reject(error);
-});
 
 export default createAppContainer(AppStackNavigator);
 

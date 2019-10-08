@@ -15,7 +15,8 @@ export default function Settings({ navigation }) {
     credentials: require('../../assets/credentials.png'),
     addresses: require('../../assets/address.png'),
     exit: require('../../assets/exit.png'),
-    heart: require('../../assets/heart.png')
+    heart: require('../../assets/heart.png'),
+    bill: require('../../assets/bill.png')
   }
   async function logoff() {
     await AsyncStorage.multiRemove([TOKEN_KEY, 'user']).then(() => {
@@ -29,18 +30,25 @@ export default function Settings({ navigation }) {
         <Title title="Configurações" />
         <Box icon={paths.credentials}
           title="Meus Dados"
-          description="sdfdkfdksfsdfsdfsdfkdsfdsf"
+          description="Visualize seus dados"
           onPress={() => navigation.navigate('Profile')}
         />
         <Box icon={paths.addresses}
           title="Endereços"
-          description="adjisadjksad"
+          description="Edite e visualize endereços"
           onPress={() => navigation.navigate("Addresses")}
         />
+
+        <Box icon={paths.bill}
+            title="Pedidos"
+            description="Verifique seus pedidos"
+            onPress={() => navigation.navigate("Orders")}
+            />
         <Box icon={paths.exit}
           title="Sair"
-          description="fdjsifjdskfjsdkfjdskf"
+          description="Finalizar sua sessão"
           onPress={logoff}
+
         />
       </View>
     </ScrollView>
